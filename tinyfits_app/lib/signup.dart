@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:form_field_validator/form_field_validator.dart';
-import 'package:tinyfits_app/signup.dart';
+import 'package:tinyfits_app/login.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginState extends State<Login> {
-  final _formKey = GlobalKey<FormState>();
-  bool keepMeLoggedIn = false;
+class _SignUpState extends State<SignUp> {
+  bool rememberPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +34,7 @@ class _LoginState extends State<Login> {
             ),
             const SizedBox(height: 32),
             const Text(
-              'Welcome back!',
+              'Welcome!',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -44,7 +42,7 @@ class _LoginState extends State<Login> {
               textAlign: TextAlign.center,
             ),
             const Text(
-              'Login to your account',
+              'Create your account',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
@@ -88,40 +86,26 @@ class _LoginState extends State<Login> {
             ),
             const SizedBox(height: 8),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Checkbox(
-                      value: keepMeLoggedIn,
-                      onChanged: (value) {
-                        setState(() {
-                          keepMeLoggedIn = value ?? false;
-                        });
-                      },
-                      activeColor: Colors.blue[400],
-                    ),
-                    const Text(
-                      'Keep me logged in',
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
-                ),
-                TextButton(
-                  onPressed: () {
-                    // Add forgot password functionality
+                Checkbox(
+                  value: rememberPassword,
+                  onChanged: (value) {
+                    setState(() {
+                      rememberPassword = value ?? false;
+                    });
                   },
-                  child: Text(
-                    'Forgot password?',
-                    style: TextStyle(color: Colors.blue[400]),
-                  ),
+                  activeColor: Colors.blue[400],
+                ),
+                const Text(
+                  'Remember password',
+                  style: TextStyle(color: Colors.grey),
                 ),
               ],
             ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
-                // Add login logic
+                // Add sign up logic
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue[400],
@@ -131,7 +115,7 @@ class _LoginState extends State<Login> {
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              child: const Text('Log in'),
+              child: const Text('Sign Up'),
             ),
             const Spacer(),
             const Divider(),
@@ -141,18 +125,18 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    "Don't have an account? ",
+                    'Already have an account? ',
                     style: TextStyle(color: Colors.grey),
                   ),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const SignUp()),
+                        MaterialPageRoute(builder: (context) => const Login()),
                       );
                     },
                     child: Text(
-                      'Sign Up',
+                      'Log in',
                       style: TextStyle(color: Colors.blue[400]),
                     ),
                   ),
