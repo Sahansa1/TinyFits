@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tinyfits_app/models/child_card.dart';
+import 'package:tinyfits_app/screens/edit_details_page.dart';
 
 class ProfilePage extends StatelessWidget {
   final ChildCard card;
@@ -61,7 +62,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   const SizedBox(width: 16),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => _navigateToEdit(context),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue[200],
                     ),
@@ -100,5 +101,19 @@ class ProfilePage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _navigateToEdit(BuildContext context) async {
+    final result = await Navigator.push<ChildCard>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditDetailsPage(card: card),
+      ),
+    );
+
+    if (result != null) {
+      // Refresh the profile page with the updated data
+      Navigator.pop(context, result);
+    }
   }
 }
