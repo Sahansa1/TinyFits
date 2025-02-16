@@ -9,6 +9,7 @@ class AddDetailsPage extends StatefulWidget {
 }
 
 class _AddDetailsPageState extends State<AddDetailsPage> {
+  final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _dobController = TextEditingController();
   final _genderController = TextEditingController();
@@ -16,12 +17,89 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
   final _weightController = TextEditingController();
   final _noteController = TextEditingController();
 
+  final List<String> genderOptions = ['Male', 'Female'];
+  String selectedGender = 'Male';
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _dobController.dispose();
+    _genderController.dispose();
+    _heightController.dispose();
+    _weightController.dispose();
+    _noteController.dispose();
+    super.dispose();
+  }
+
+  Widget _buildGenderSelector() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Gender *',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black54,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: genderOptions.map((gender) {
+              bool isSelected = selectedGender == gender;
+              return Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    right: gender == 'Male' ? 8.0 : 0,
+                    left: gender == 'Female' ? 8.0 : 0,
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        selectedGender = gender;
+                      });
+                    },
+                    child: Container(
+                      height: 48,
+                      decoration: BoxDecoration(
+                        color: isSelected ? Colors.blue[200] : Colors.white,
+                        border: Border.all(
+                          color: isSelected
+                              ? Colors.blue[200]!
+                              : Colors.grey[300]!,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Text(
+                          gender,
+                          style: TextStyle(
+                            color: isSelected ? Colors.white : Colors.black87,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Add Details'),
+        centerTitle: true,
+        title: const Text('Add Child'),
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
@@ -31,32 +109,71 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.orange[100],
-            borderRadius: BorderRadius.circular(12),
-          ),
+        child: Form(
+          key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _buildTextField(_nameController, 'Name'),
-              _buildTextField(_dobController, 'Date of Birth'),
-              _buildTextField(_genderController, 'Gender'),
-              _buildTextField(_heightController, 'Height'),
-              _buildTextField(_weightController, 'Weight'),
-              _buildTextField(_noteController, 'Add a note'),
+              _buildTextField(
+                'Name',
+                _nameController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a name';
+                  }
+                  return null;
+                },
+              ),
+              _buildTextField(
+                'Date of Birth',
+                _dobController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter date of birth';
+                  }
+                  // Add more specific date validation if needed
+                  return null;
+                },
+              ),
+              _buildGenderSelector(),
+              _buildTextField(
+                'Height',
+                _heightController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter height';
+                  }
+                  if (!RegExp(r'^\d+(\.\d+)?$').hasMatch(value)) {
+                    return 'Please enter a valid number';
+                  }
+                  return null;
+                },
+              ),
+              _buildTextField(
+                'Weight',
+                _weightController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter weight';
+                  }
+                  if (!RegExp(r'^\d+(\.\d+)?$').hasMatch(value)) {
+                    return 'Please enter a valid number';
+                  }
+                  return null;
+                },
+              ),
+              _buildTextField(
+                'Note',
+                _noteController,
+                required: false,
+              ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _saveDetails,
+                onPressed: _saveChild,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[200],
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+                  minimumSize: const Size(double.infinity, 50),
                 ),
-                child: const Text('Save Details'),
+                child: const Text('Add Child'),
               ),
             ],
           ),
@@ -65,33 +182,47 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String hint) {
+  Widget _buildTextField(
+    String label,
+    TextEditingController controller, {
+    String? Function(String?)? validator,
+    bool required = true,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         decoration: InputDecoration(
-          hintText: hint,
-          filled: true,
-          fillColor: Colors.white,
+          labelText: label + (required ? ' *' : ''),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide.none,
           ),
         ),
+        validator: validator ??
+            (required
+                ? (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'This field is required';
+                    }
+                    return null;
+                  }
+                : null),
       ),
     );
   }
 
-  void _saveDetails() {
-    final card = ChildCard(
-      name: _nameController.text,
-      dateOfBirth: _dobController.text,
-      gender: _genderController.text,
-      height: _heightController.text,
-      weight: _weightController.text,
-      note: _noteController.text,
-    );
-    Navigator.pop(context, card);
+  void _saveChild() {
+    if (_formKey.currentState!.validate()) {
+      final newChild = ChildCard(
+        name: _nameController.text,
+        dateOfBirth: _dobController.text,
+        gender: selectedGender,
+        height: _heightController.text,
+        weight: _weightController.text,
+        note: _noteController.text,
+      );
+
+      Navigator.pop(context, newChild);
+    }
   }
 }
