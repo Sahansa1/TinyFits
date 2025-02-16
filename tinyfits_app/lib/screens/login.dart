@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:tinyfits_app/signup.dart';
+import 'package:tinyfits_app/screens/signup.dart';
+import 'package:tinyfits_app/screens/home_page.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -12,6 +13,15 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   bool keepMeLoggedIn = false;
+
+  void _handleLogin() {
+    // Add your login logic here
+    // After successful login:
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const HomePage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,9 +130,7 @@ class _LoginState extends State<Login> {
             ),
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: () {
-                // Add login logic
-              },
+              onPressed: _handleLogin,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue[400],
                 foregroundColor: Colors.white,

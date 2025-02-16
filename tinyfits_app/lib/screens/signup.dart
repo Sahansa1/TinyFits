@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tinyfits_app/login.dart';
+import 'package:tinyfits_app/screens/login.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});

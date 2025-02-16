@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:tinyfits_app/login.dart';
+import 'package:tinyfits_app/screens/login.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,14 +15,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    print('Initializing video player...'); // Debug print
     _controller = VideoPlayerController.asset('assets/splashscreen.mp4')
       ..initialize().then((_) {
-        print('Video initialized successfully'); // Debug print
         setState(() {});
         _controller.play();
-      }).catchError((error) {
-        print('Error initializing video: $error'); // Debug print
       });
 
     // Navigate to Login screen after video ends
@@ -52,17 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 aspectRatio: _controller.value.aspectRatio,
                 child: VideoPlayer(_controller),
               )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 20),
-                  Text(
-                    'Loading...',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
+            : const CircularProgressIndicator(),
       ),
     );
   }

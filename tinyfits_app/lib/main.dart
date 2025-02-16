@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 //import 'dart:async';
-import 'package:tinyfits_app/login.dart';
-import 'package:tinyfits_app/splash_screen.dart';
+import 'package:tinyfits_app/screens/login.dart';
+import 'package:tinyfits_app/screens/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Login(), // Set Login as the initial screen after splash
+      home: const SplashScreen(), // Start with splash screen
     );
   }
 }
