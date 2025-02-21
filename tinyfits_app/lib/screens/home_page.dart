@@ -3,6 +3,9 @@ import 'package:tinyfits_app/models/child_card.dart';
 import 'package:tinyfits_app/screens/add_details_page.dart';
 import 'package:tinyfits_app/screens/profile_page.dart';
 import 'package:tinyfits_app/screens/clothing_page.dart';
+import 'package:tinyfits_app/screens/help_support_page.dart';
+import 'package:tinyfits_app/screens/privacy_policy_page.dart';
+import 'package:tinyfits_app/screens/about_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,9 +42,11 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {},
+          Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () => Scaffold.of(context).openEndDrawer(),
+            ),
           ),
         ],
       ),
@@ -155,6 +160,58 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
+      endDrawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.help_outline),
+              title: const Text('Help & Support'),
+              onTap: () {
+                Navigator.pop(context);
+                _navigateToHelpSupport();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.privacy_tip_outlined),
+              title: const Text('Privacy Policy'),
+              onTap: () {
+                Navigator.pop(context);
+                _navigateToPrivacyPolicy();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.info_outline),
+              title: const Text('About'),
+              onTap: () {
+                Navigator.pop(context);
+                _navigateToAbout();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Logout'),
+              onTap: () {
+                Navigator.pop(context);
+                // TODO: Implement logout functionality
+                Navigator.popUntil(context, (route) => route.isFirst);
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -191,5 +248,26 @@ class _HomePageState extends State<HomePage> {
     if (Navigator.canPop(context)) {
       Navigator.popUntil(context, (route) => route.isFirst);
     }
+  }
+
+  void _navigateToHelpSupport() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const HelpSupportPage()),
+    );
+  }
+
+  void _navigateToPrivacyPolicy() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const PrivacyPolicyPage()),
+    );
+  }
+
+  void _navigateToAbout() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const AboutPage()),
+    );
   }
 }
