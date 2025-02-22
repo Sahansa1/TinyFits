@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tinyfits_app/screens/add_details_page.dart';
 import 'package:tinyfits_app/screens/help_support_page.dart';
 import 'package:tinyfits_app/screens/privacy_policy_page.dart';
@@ -43,8 +44,67 @@ class ClothingPage extends StatelessWidget {
         ],
       ),
       endDrawer: Drawer(
-          // ... existing drawer code ...
-          ),
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.help_outline),
+              title: const Text('Help & Support'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HelpSupportPage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.privacy_tip_outlined),
+              title: const Text('Privacy Policy'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const PrivacyPolicyPage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.info_outline),
+              title: const Text('About'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AboutPage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Logout'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.popUntil(context, (route) => route.isFirst);
+              },
+            ),
+          ],
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -64,17 +124,20 @@ class ClothingPage extends StatelessWidget {
                   onTap: () => _navigateToTops(context),
                   child: const Column(
                     children: [
-                      Icon(Icons.checkroom, size: 40),
+                      FaIcon(FontAwesomeIcons.shirt, size: 40),
                       Text('Tops'),
                     ],
                   ),
                 ),
                 const SizedBox(width: 32),
-                const Column(
-                  children: [
-                    Icon(Icons.accessibility_new, size: 40),
-                    Text('Pants'),
-                  ],
+                GestureDetector(
+                  onTap: () => _navigateToPants(context),
+                  child: const Column(
+                    children: [
+                      Icon(Icons.straight, size: 40),
+                      Text('Pants'),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -122,17 +185,17 @@ class ClothingPage extends StatelessWidget {
         onTap: (index) {
           switch (index) {
             case 0:
-              // Already on clothing page, do nothing
+              // Already on clothing page
               break;
             case 1:
-              Navigator.pop(context); // Go back to home first
+              Navigator.pop(context);
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const AddDetailsPage()),
               );
               break;
             case 2:
-              Navigator.pop(context); // This will take us back to home page
+              Navigator.pop(context);
               break;
           }
         },
@@ -235,8 +298,8 @@ class TopsPage extends StatelessWidget {
                         ),
                       ),
                       child: Center(
-                        child: Icon(
-                          Icons.checkroom,
+                        child: FaIcon(
+                          FontAwesomeIcons.shirt,
                           size: 50,
                           color: Colors.grey[600],
                         ),
@@ -295,9 +358,130 @@ class TopsPage extends StatelessWidget {
   }
 }
 
-// Keep the existing PantsPage class
 class PantsPage extends StatelessWidget {
   const PantsPage({super.key});
 
-  // ... rest of the PantsPage implementation as before ...
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Pants'),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+            childAspectRatio: 0.75,
+          ),
+          itemCount: 5,
+          itemBuilder: (context, index) {
+            final items = [
+              {
+                'name': 'Jeans',
+                'price': '\$39.99',
+                'image': 'assets/jeans.png'
+              },
+              {
+                'name': 'Cargo Pants',
+                'price': '\$34.99',
+                'image': 'assets/cargo.png'
+              },
+              {
+                'name': 'Sweatpants',
+                'price': '\$29.99',
+                'image': 'assets/sweatpants.png'
+              },
+              {
+                'name': 'Shorts',
+                'price': '\$24.99',
+                'image': 'assets/shorts.png'
+              },
+              {
+                'name': 'Leggings',
+                'price': '\$19.99',
+                'image': 'assets/leggings.png'
+              },
+            ];
+
+            return Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(12),
+                        ),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.straight,
+                          size: 50,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          items[index]['name']!,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          items[index]['price']!,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Size: M',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.favorite_border),
+                              onPressed: () {},
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
 }
