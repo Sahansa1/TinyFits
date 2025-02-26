@@ -190,7 +190,7 @@ class PrivacyPolicyPage extends StatelessWidget {
     );
   }
 
-  /// 📌 **Bullet Points with Improved Styling**
+  /// Bullet Points with Improved Styling
   Widget _buildBulletPoint(BulletPoint bullet) {
     return Padding(
       padding: const EdgeInsets.only(left: 12, top: 6),
@@ -220,7 +220,7 @@ class PrivacyPolicyPage extends StatelessWidget {
     );
   }
 
-  /// 📌 **Reusable Info Item (Date Section)**
+  ///Reusable Info Item (Date Section)
   Widget _infoItem(IconData icon, String text) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
