@@ -247,22 +247,54 @@ class _HomePageState extends State<HomePage> {
                                 ? const Icon(Icons.person)
                                 : null,
                           ),
-                          const SizedBox(width: 16),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          const SizedBox(width: 12),
+                          // **Name & Age**
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  card.name,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  'Age: ${_calculateAge(card.dateOfBirth)}',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          // **Icons**
+                          Row(
                             children: [
-                              Text(
-                                card.name,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                              // **Clothing Icon**
+                              IconButton(
+                                icon: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: AppColors.themeBlue,
+                                  child: const Icon(Icons.checkroom,
+                                      color: Colors.white, size: 18),
                                 ),
+                                onPressed: () => _navigateToClothing(),
                               ),
-                              Text(
-                                'Age: ${_calculateAge(card.dateOfBirth)}',
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255),
+
+                              // **Delete Icon**
+                              IconButton(
+                                icon: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: AppColors.themeBlue,
+                                  child: const Icon(Icons.delete,
+                                      color: Colors.white, size: 18),
                                 ),
+                                onPressed: () => _deleteCard(index),
                               ),
                             ],
                           ),
