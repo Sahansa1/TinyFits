@@ -34,6 +34,143 @@ class _HomePageState extends State<HomePage> {
     return cardColors[index % cardColors.length];
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     backgroundColor: Colors.white,
+  //     appBar: AppBar(
+  //       centerTitle: true,
+  //       title: Image.asset(
+  //         'assets/logo.png',
+  //         height: 40,
+  //       ),
+  //       backgroundColor: Colors.white,
+  //       elevation: 0,
+  //       actions: [
+  //         Builder(
+  //           builder: (context) => IconButton(
+  //             icon: const Icon(Icons.menu),
+  //             onPressed: () => Scaffold.of(context).openEndDrawer(),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //     body: Column(
+  //       children: [
+  //         if (cards.isEmpty)
+  //           Expanded(
+  //             child: Center(
+  //               child: GestureDetector(
+  //                 onTap: () => _navigateToAddDetails(),
+  //                 child: Container(
+  //                   padding: const EdgeInsets.symmetric(
+  //                     horizontal: 40,
+  //                     vertical: 20,
+  //                   ),
+  //                   decoration: BoxDecoration(
+  //                     color: AppColors.themeBlue,
+  //                     borderRadius: BorderRadius.circular(10),
+  //                   ),
+  //                   child: const Text(
+  //                     'Add a card',
+  //                     style: TextStyle(
+  //                       color: Colors.white,
+  //                       fontSize: 18,
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //           )
+  //         else
+  //           Expanded(
+  //             child: ListView.builder(
+  //               padding: const EdgeInsets.all(16),
+  //               itemCount: cards.length,
+  //               itemBuilder: (context, index) {
+  //                 final card = cards[index];
+  //                 return GestureDetector(
+  //                   onTap: () => _navigateToProfile(card),
+  //                   child: Container(
+  //                     margin: const EdgeInsets.only(bottom: 16),
+  //                     padding: const EdgeInsets.all(16),
+  //                     decoration: BoxDecoration(
+  //                       color: getCardColor(index),
+  //                       borderRadius: BorderRadius.circular(12),
+  //                     ),
+  //                     child: Row(
+  //                       children: [
+  //                         CircleAvatar(
+  //                           radius: 30,
+  //                           backgroundImage: card.imageUrl != null
+  //                               ? NetworkImage(card.imageUrl!)
+  //                               : null,
+  //                           child: card.imageUrl == null
+  //                               ? const Icon(Icons.person)
+  //                               : null,
+  //                         ),
+  //                         const SizedBox(width: 16),
+  //                         Column(
+  //                           crossAxisAlignment: CrossAxisAlignment.start,
+  //                           children: [
+  //                             Text(
+  //                               card.name,
+  //                               style: const TextStyle(
+  //                                 fontSize: 18,
+  //                                 fontWeight: FontWeight.bold,
+  //                               ),
+  //                             ),
+  //                             Text(
+  //                               'Age: ${_calculateAge(card.dateOfBirth)}',
+  //                               style: const TextStyle(
+  //                                 color: Color.fromARGB(255, 255, 255, 255),
+  //                               ),
+  //                             ),
+  //                           ],
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 );
+  //               },
+  //             ),
+  //           ),
+  //       ],
+  //     ),
+  //     bottomNavigationBar: BottomNavigationBar(
+  //       currentIndex: 0,
+  //       items: const [
+  //         BottomNavigationBarItem(
+  //           icon: Icon(Icons.checkroom),
+  //           label: 'Clothing',
+  //         ),
+  //         BottomNavigationBarItem(
+  //           icon: Icon(Icons.add),
+  //           label: 'Add',
+  //         ),
+  //         BottomNavigationBarItem(
+  //           icon: Icon(Icons.person),
+  //           label: 'Profile',
+  //         ),
+  //       ],
+  //       onTap: (index) {
+  //         switch (index) {
+  //           case 0:
+  //             _navigateToClothing();
+  //             break;
+  //           case 1:
+  //             _navigateToAddDetails();
+  //             break;
+  //           case 2:
+  //             _navigateToHome();
+  //             break;
+  //         }
+  //       },
+  //     ),
+  //     endDrawer: const CustomDrawer(),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +192,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+      endDrawer: const CustomDrawer(),
       body: Column(
         children: [
           if (cards.isEmpty)
@@ -90,41 +228,65 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   final card = cards[index];
                   return GestureDetector(
-                    onTap: () => _navigateToProfile(card),
+                    onTap: () {}, // Add navigation logic if needed
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 16),
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: getCardColor(index),
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
                         children: [
+                          /// **Profile Image / Placeholder**
                           CircleAvatar(
-                            radius: 30,
+                            radius: 40,
+                            backgroundColor: Colors.white,
                             backgroundImage: card.imageUrl != null
                                 ? NetworkImage(card.imageUrl!)
                                 : null,
                             child: card.imageUrl == null
-                                ? const Icon(Icons.person)
+                                ? const Icon(Icons.person, size: 40)
                                 : null,
                           ),
                           const SizedBox(width: 16),
+
+                          /// **Name & Age**
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  card.name,
+                                  style: const TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  'Age: ${_calculateAge(card.dateOfBirth)}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          /// **Buttons (Clothing & Delete)**
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                card.name,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              IconButton(
+                                icon: const Icon(Icons.checkroom,
+                                    color: Colors.white),
+                                onPressed: _navigateToClothing,
                               ),
-                              Text(
-                                'Age: ${_calculateAge(card.dateOfBirth)}',
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                ),
+                              IconButton(
+                                icon: const Icon(Icons.delete,
+                                    color: Colors.white),
+                                onPressed: () => _deleteCard(index),
                               ),
                             ],
                           ),
@@ -167,7 +329,6 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
-      endDrawer: const CustomDrawer(),
     );
   }
 
@@ -193,7 +354,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _navigateToClothing() {
-    print('Navigating to Clothing Page');
+    //print('Navigating to Clothing Page');
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const ClothingPage()),
@@ -206,26 +367,26 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _navigateToHelpSupport() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => HelpSupportPage()),
-    );
-  }
+  // void _navigateToHelpSupport() {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => HelpSupportPage()),
+  //   );
+  // }
 
-  void _navigateToPrivacyPolicy() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const PrivacyPolicyPage()),
-    );
-  }
+  // void _navigateToPrivacyPolicy() {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => const PrivacyPolicyPage()),
+  //   );
+  // }
 
-  void _navigateToAbout() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const AboutPage()),
-    );
-  }
+  // void _navigateToAbout() {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => const AboutPage()),
+  //   );
+  // }
 
   Future<void> _editCard(int index) async {
     final result = await Navigator.push(
@@ -243,97 +404,32 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _showLogoutConfirmationDialog(BuildContext context) {
+  /// **Function to Delete a Card**
+  void _deleteCard(int index) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20), // Rounded corners
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Info Icon on top
-                CircleAvatar(
-                  radius: 24,
-                  backgroundColor:
-                      AppColors.themeBlue, // Light background for icon
-                  child: Icon(
-                    Icons.info_outline,
-                    color: Colors.white,
-                    size: 28,
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                // Title
-                const Text(
-                  'Do you want to logout?',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 8),
-
-                // Description
-                const Text(
-                  "You'll need to sign in again.",
-                  style: TextStyle(fontSize: 14, color: Colors.black54),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20),
-
-                // Buttons
-                Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context); // Close dialog
-                          _logout(); // Logout function
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.themeBlue, // Button color
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: const Text(
-                          "Yes, log out",
-                          style: TextStyle(fontSize: 14, color: Colors.white),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context); // Close dialog
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.themeBlue, // Lighter color
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: const Text(
-                          "No, stay signed in",
-                          style: TextStyle(fontSize: 14, color: Colors.white),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+        return AlertDialog(
+          title: const Text("Delete Card"),
+          content: const Text("Are you sure you want to delete this card?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("Cancel"),
             ),
-          ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  cards.removeAt(index);
+                });
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                "Delete",
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
         );
       },
     );
@@ -367,17 +463,5 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {
       return "Invalid date"; // Handle errors gracefully
     }
-  }
-
-  void _logout() {
-    // Implement your logout logic here (e.g., clear user session)
-    // Then navigate to the login screen
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              const Login()), // Replace with your login screen
-      (Route<dynamic> route) => false, // Remove all previous routes
-    );
   }
 }
