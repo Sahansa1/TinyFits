@@ -272,11 +272,16 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
       padding: const EdgeInsets.only(bottom: 16),
       child: TextFormField(
         controller: controller,
+        readOnly: label == 'Date of Birth',
+        onTap: label == 'Date of Birth' ? () => _selectDate(context) : null,
         decoration: InputDecoration(
           labelText: label + (required ? ' *' : ''),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
           ),
+          suffixIcon: label == 'Date of Birth'
+              ? const Icon(Icons.calendar_today)
+              : null,
         ),
         validator: validator ??
             (required
@@ -289,6 +294,20 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
                 : null),
       ),
     );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null) {
+      setState(() {
+        _dobController.text = "${picked.day}/${picked.month}/${picked.year}";
+      });
+    }
   }
 
   void _saveChild() {

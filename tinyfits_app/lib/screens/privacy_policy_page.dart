@@ -16,20 +16,20 @@ class PrivacyPolicyPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 8),
+              /// **Effective Date Section**
               _buildDateSection(),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
+
+              /// **Privacy Sections**
               _buildSection(
                 '1. Introduction',
-                'Welcome to TinyFits! TinyFits is a mobile application designed to help parents '
-                    'find the right clothing sizes for their children based on personalized recommendations.\n\n'
-                    'Your privacy is important to us, and this Privacy Policy explains how we collect, '
-                    'use, and protect your data.\n\n'
+                'Welcome to TinyFits! TinyFits is designed to help parents manage children’s clothing sizes.\n\n'
+                    'Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your data.\n\n'
                     'By using TinyFits, you agree to the collection and use of information in accordance with this policy.',
               ),
               _buildSection(
                 '2. Information We Collect',
-                'We collect the following types of information to provide and improve our services:',
+                'We collect the following information:',
                 bulletPoints: [
                   BulletPoint(
                     title: 'Personal Information:',
@@ -38,7 +38,7 @@ class PrivacyPolicyPage extends StatelessWidget {
                   BulletPoint(
                     title: 'Child Profile Information:',
                     content:
-                        'Your child\'s name, age, height, weight, and gender (for personalized size recommendations).',
+                        'Your child’s name, age, height, weight, and gender (for size recommendations).',
                   ),
                   BulletPoint(
                     title: 'App Usage Data:',
@@ -49,18 +49,17 @@ class PrivacyPolicyPage extends StatelessWidget {
               ),
               _buildSection(
                 '3. How We Use Your Information',
-                'We use your data for the following purposes:',
+                'We use your data to:',
                 bulletPoints: [
                   BulletPoint(
                     content:
-                        'To generate personalized clothing size recommendations.',
+                        'Generate personalized clothing size recommendations.',
                   ),
                   BulletPoint(
-                    content:
-                        'To improve app functionality and user experience.',
+                    content: 'Improve app functionality and user experience.',
                   ),
                   BulletPoint(
-                    content: 'To store and manage child profiles.',
+                    content: 'Store and manage child profiles securely.',
                   ),
                 ],
                 additionalContent:
@@ -68,31 +67,28 @@ class PrivacyPolicyPage extends StatelessWidget {
               ),
               _buildSection(
                 '4. Data Security',
-                'We take data security seriously and implement appropriate security measures to protect your information.',
+                'We implement security measures to protect your data:',
                 bulletPoints: [
                   BulletPoint(
                     content:
-                        'All sensitive data is encrypted to prevent unauthorized access.',
+                        'Sensitive data is encrypted to prevent unauthorized access.',
                   ),
                   BulletPoint(
                     content:
-                        'We use secure servers and industry-standard security protocols to safeguard your information.',
+                        'We use secure servers and industry-standard security protocols.',
                   ),
                   BulletPoint(
                     content:
-                        'We do not share your personal details with unauthorized parties.',
+                        'Your personal details are not shared with unauthorized parties.',
                   ),
                 ],
                 additionalContent:
-                    '\nHowever, while we strive to use commercially acceptable means to protect your data, '
-                    'no method of transmission over the Internet or method of electronic storage is 100% secure.',
+                    '\nWhile we strive to secure your data, no online system is 100% secure.',
               ),
               _buildSection(
                 '5. Third-Party Services',
-                'TinyFits does not sell or share your personal data with third parties.\n\n'
-                    'However, we may use third-party analytics services to improve the app experience, '
-                    'such as tracking app usage patterns. These third-party services are required to comply '
-                    'with data protection regulations.',
+                'TinyFits does not sell or share your personal data.\n\n'
+                    'However, we may use third-party analytics services to improve app experience. These services comply with data protection regulations.',
               ),
               _buildSection(
                 '6. Your Rights & Data Control',
@@ -102,8 +98,7 @@ class PrivacyPolicyPage extends StatelessWidget {
                     content: 'Access the personal data stored in your account.',
                   ),
                   BulletPoint(
-                    content:
-                        'Edit or delete your child\'s profile at any time.',
+                    content: 'Edit or delete your child’s profile at any time.',
                   ),
                   BulletPoint(
                     content:
@@ -111,13 +106,12 @@ class PrivacyPolicyPage extends StatelessWidget {
                   ),
                 ],
                 additionalContent:
-                    '\nIf you wish to exercise any of these rights, please contact us.',
+                    '\nIf you wish to exercise these rights, please contact us.',
               ),
               _buildSection(
                 '7. Changes to This Policy',
-                'We may update this Privacy Policy from time to time. Any changes will be reflected '
-                    'within the app, and we will notify users of significant updates.\n\n'
-                    'Please review this policy periodically to stay informed about how we protect your data.',
+                'We may update this Privacy Policy periodically. Changes will be reflected in the app, and we will notify users of significant updates.\n\n'
+                    'Please review this policy regularly to stay informed about how we protect your data.',
               ),
             ],
           ),
@@ -126,86 +120,90 @@ class PrivacyPolicyPage extends StatelessWidget {
     );
   }
 
+  /// 📌 **Date Section with Modern Styling**
   Widget _buildDateSection() {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.themeBlue,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Effective Date: 19-02-2025',
-            style: TextStyle(fontWeight: FontWeight.w500),
-          ),
-          SizedBox(height: 4),
-          Text(
-            'Last Updated: 19-02-2025',
-            style: TextStyle(fontWeight: FontWeight.w500),
-          ),
-        ],
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _infoItem(Icons.calendar_today, 'Effective Date: 19-02-2025'),
+            _infoItem(Icons.update, 'Last Updated: 19-02-2025'),
+          ],
+        ),
       ),
     );
   }
 
+  /// 📌 **Reusable Privacy Sections with Cards**
   Widget _buildSection(
     String title,
     String content, {
     List<BulletPoint>? bulletPoints,
     String? additionalContent,
   }) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            content,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.black87,
-            ),
-          ),
-          if (bulletPoints != null) ...[
-            const SizedBox(height: 8),
-            ...bulletPoints.map((bullet) => _buildBulletPoint(bullet)),
-          ],
-          if (additionalContent != null) ...[
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      margin: const EdgeInsets.only(bottom: 16),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Text(
-              additionalContent,
+              title,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 18, // Reduced from 20
+                fontWeight: FontWeight.bold,
                 color: Colors.black87,
               ),
             ),
+            const SizedBox(height: 8),
+            Text(
+              content,
+              style: const TextStyle(
+                fontSize: 14, // Reduced from 16
+                color: Colors.black87,
+              ),
+            ),
+            if (bulletPoints != null) ...[
+              const SizedBox(height: 8),
+              ...bulletPoints.map((bullet) => _buildBulletPoint(bullet)),
+            ],
+            if (additionalContent != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                additionalContent,
+                style: const TextStyle(
+                  fontSize: 14, // Reduced from 16
+                  color: Colors.black87,
+                ),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
 
+  /// 📌 **Bullet Points with Improved Styling**
   Widget _buildBulletPoint(BulletPoint bullet) {
     return Padding(
-      padding: const EdgeInsets.only(left: 16, top: 8),
+      padding: const EdgeInsets.only(left: 12, top: 6),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('• ', style: TextStyle(fontSize: 16)),
+          const Icon(Icons.circle,
+              size: 6, color: Colors.black54), // Small bullet dot
+          const SizedBox(width: 8),
           Expanded(
             child: RichText(
               text: TextSpan(
-                style: const TextStyle(fontSize: 16, color: Colors.black87),
+                style: const TextStyle(fontSize: 14, color: Colors.black87),
                 children: [
                   if (bullet.title != null)
                     TextSpan(
@@ -221,8 +219,26 @@ class PrivacyPolicyPage extends StatelessWidget {
       ),
     );
   }
+
+  /// 📌 **Reusable Info Item (Date Section)**
+  Widget _infoItem(IconData icon, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        children: [
+          Icon(icon, color: AppColors.themeBlue, size: 20),
+          const SizedBox(width: 12),
+          Text(
+            text,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
+/// Bullet Point Model
 class BulletPoint {
   final String? title;
   final String content;

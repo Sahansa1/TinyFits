@@ -148,11 +148,16 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
       padding: const EdgeInsets.only(bottom: 16),
       child: TextFormField(
         controller: controller,
+        readOnly: label == 'Date of Birth',
+        onTap: label == 'Date of Birth' ? () => _selectDate(context) : null,
         decoration: InputDecoration(
           labelText: label + (required ? ' *' : ''),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
           ),
+          suffixIcon: label == 'Date of Birth'
+              ? const Icon(Icons.calendar_today)
+              : null,
         ),
         validator: validator ??
             (required
@@ -165,6 +170,33 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
                 : null),
       ),
     );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    // Parse existing date or use current date as default
+    DateTime initialDate;
+    try {
+      List<String> parts = dobController.text.split('/');
+      initialDate = DateTime(
+        int.parse(parts[2]), // year
+        int.parse(parts[1]), // month
+        int.parse(parts[0]), // day
+      );
+    } catch (e) {
+      initialDate = DateTime.now();
+    }
+
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null) {
+      setState(() {
+        dobController.text = "${picked.day}/${picked.month}/${picked.year}";
+      });
+    }
   }
 
   Widget _buildGenderSelector() {

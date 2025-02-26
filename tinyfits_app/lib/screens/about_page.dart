@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinyfits_app/theme/colors.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -9,29 +10,108 @@ class AboutPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('About'),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(16.0),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            /// **Title Section**
+            const Text(
               'About TinyFits',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 22, // Consistent with Help & Support
+                fontWeight: FontWeight.bold,
+                color: AppColors.themeBlue,
+              ),
             ),
-            SizedBox(height: 16),
-            Text(
-              'TinyFits is your ultimate companion for managing your children\'s clothing sizes and growth.\n\n'
-              'Version: 1.0.0\n\n'
-              'Features:\n'
-              '• Track multiple children\'s measurements\n'
-              '• Manage clothing inventory\n'
-              '• Get size recommendations\n'
-              '• Track growth over time\n\n'
-              '© 2024 TinyFits. All rights reserved.',
-              style: TextStyle(fontSize: 16),
+            const SizedBox(height: 8),
+            const Text(
+              'This app was developed as a final-year project to help parents predict child growth and recommend clothing sizes for kids aged 1 to 5 years based on key measurements. Designed specifically for Sri Lankan children, it considers unique growth patterns different from other countries. In the future, we aim to expand to other countries and integrate the app with real clothing stores.',
+              style: TextStyle(
+                fontSize: 14, // Reduced for better readability
+                color: Colors.grey,
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            /// Features Section
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _featureItem(Icons.child_care,
+                        'Track multiple children\'s measurements'),
+                    _featureItem(Icons.inventory, 'Manage clothing inventory'),
+                    _featureItem(Icons.recommend, 'Get size recommendations'),
+                    _featureItem(Icons.timeline, 'Track growth over time'),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            /// Version & Copyright Info
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _infoItem(Icons.info_outline, 'Version: 1.0.0'),
+                    _infoItem(Icons.copyright,
+                        '© 2024 TinyFits. All rights reserved.'),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  /// Reusable Feature Item UI
+  Widget _featureItem(IconData icon, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        children: [
+          Icon(icon, color: AppColors.themeBlue, size: 20),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(fontSize: 14),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Reusable Info Item UI
+  Widget _infoItem(IconData icon, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.grey.shade700, size: 20),
+          const SizedBox(width: 12),
+          Text(
+            text,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+        ],
       ),
     );
   }
