@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tinyfits_app/models/child_card.dart';
 import 'package:tinyfits_app/theme/colors.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class EditDetailsPage extends StatefulWidget {
   final ChildCard card;
@@ -15,7 +17,6 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController nameController;
   late TextEditingController dobController;
-  late TextEditingController genderController;
   late TextEditingController heightController;
   late TextEditingController weightController;
   late TextEditingController noteController;
@@ -23,12 +24,14 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
   final List<String> genderOptions = ['Male', 'Female'];
   late String selectedGender;
 
+  late ImagePicker _picker;
+  File? _image;
+
   @override
   void initState() {
     super.initState();
     nameController = TextEditingController(text: widget.card.name);
     dobController = TextEditingController(text: widget.card.dateOfBirth);
-    genderController = TextEditingController(text: widget.card.gender);
     heightController = TextEditingController(text: widget.card.height);
     weightController = TextEditingController(text: widget.card.weight);
     noteController = TextEditingController(text: widget.card.note);
@@ -36,13 +39,13 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
     if (!genderOptions.contains(selectedGender)) {
       selectedGender = genderOptions[0]; // Default to first option if invalid
     }
+    _picker = ImagePicker();
   }
 
   @override
   void dispose() {
     nameController.dispose();
     dobController.dispose();
-    genderController.dispose();
     heightController.dispose();
     weightController.dispose();
     noteController.dispose();
@@ -59,136 +62,181 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              _buildTextField(
-                'Name',
-                nameController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a name';
-                  }
-                  return null;
-                },
+        child: Column(
+          children: [
+            Center(
+              child: Stack(
+                children: [
+                  Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.grey[300]!),
+                    ),
+                    child: _image != null
+                        ? ClipOval(
+                            child: Image.file(
+                              _image!,
+                              width: 120,
+                              height: 120,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : Icon(
+                            Icons.person,
+                            size: 60,
+                            color: Colors.grey[400],
+                          ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: _pickImage, // Call the image picker
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: const BoxDecoration(
+                          color: AppColors.themeBlue,
+                          shape: BoxShape.circle,
+                        ),
+                        child: _image != null
+                            ? const Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                                size: 20,
+                              )
+                            : const Icon(
+                                Icons.camera_alt,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              _buildTextField(
-                'Date of Birth',
-                dobController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter date of birth';
-                  }
-                  // Add more specific date validation if needed
-                  return null;
-                },
+            ),
+            const SizedBox(height: 24),
+
+            /// **Child Details Card**
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: AppColors.themeOrange, // Background color matches design
+                borderRadius: BorderRadius.circular(20),
               ),
-              _buildGenderSelector(),
-              _buildTextField(
-                'Height',
-                heightController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter height';
-                  }
-                  if (!RegExp(r'^\d+(\.\d+)?$').hasMatch(value)) {
-                    return 'Please enter a valid number';
-                  }
-                  return null;
-                },
-              ),
-              _buildTextField(
-                'Weight',
-                weightController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter weight';
-                  }
-                  if (!RegExp(r'^\d+(\.\d+)?$').hasMatch(value)) {
-                    return 'Please enter a valid number';
-                  }
-                  return null;
-                },
-              ),
-              _buildTextField(
-                'Note',
-                noteController,
-                required: false,
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _saveChanges,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.themeBlue,
-                  minimumSize: const Size(double.infinity, 50),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    /// **Title**
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Child's Details",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+
+                    /// **Input Fields**
+                    _buildTextField("Name", nameController),
+                    _buildTextField("Date of Birth", dobController,
+                        isDate: true),
+                    _buildGenderSelector(),
+                    _buildTextField("Height", heightController),
+                    _buildTextField("Weight", weightController),
+                    _buildTextField("Add a note", noteController,
+                        required: false),
+                    const SizedBox(height: 16),
+
+                    /// **Save Button**
+                    ElevatedButton(
+                      onPressed: _saveChanges,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.themeBlue,
+                        minimumSize:
+                            const Size(double.infinity, 45), // Reduced height
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text(
+                        "Save details",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ),
+                  ],
                 ),
-                child: const Text('Save Changes'),
               ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 16),
+          ],
         ),
       ),
     );
   }
 
+  /// 📌 **Reusable Input Field
   Widget _buildTextField(
     String label,
     TextEditingController controller, {
-    String? Function(String?)? validator,
     bool required = true,
+    bool isDate = false,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 12),
       child: TextFormField(
         controller: controller,
-        readOnly: label == 'Date of Birth',
-        onTap: label == 'Date of Birth' ? () => _selectDate(context) : null,
+        readOnly: isDate,
+        onTap: isDate ? () => _selectDate(context) : null,
         decoration: InputDecoration(
-          labelText: label + (required ? ' *' : ''),
+          labelText: label,
+          filled: true,
+          fillColor: Colors.white,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
           ),
-          suffixIcon: label == 'Date of Birth'
-              ? const Icon(Icons.calendar_today)
-              : null,
+          suffixIcon: isDate ? const Icon(Icons.calendar_today) : null,
         ),
-        validator: validator ??
-            (required
-                ? (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'This field is required';
-                    }
-                    return null;
-                  }
-                : null),
+        validator: (value) {
+          if (required && (value == null || value.isEmpty)) {
+            return 'This field is required';
+          }
+          if (label == 'Weight' &&
+              (double.tryParse(value!) == null || double.parse(value) > 60)) {
+            return 'Weight must be a number and cannot exceed 60 kg';
+          }
+          if (label == 'Height' &&
+              (double.tryParse(value!) == null || double.parse(value) > 150)) {
+            return 'Height must be a number and cannot exceed 150 cm';
+          }
+          return null;
+        },
       ),
     );
   }
 
+  /// 📌 **Date Picker**
   Future<void> _selectDate(BuildContext context) async {
-    // Parse existing date or use current date as default
-    DateTime initialDate;
-    try {
-      List<String> parts = dobController.text.split('/');
-      initialDate = DateTime(
-        int.parse(parts[2]), // year
-        int.parse(parts[1]), // month
-        int.parse(parts[0]), // day
-      );
-    } catch (e) {
-      initialDate = DateTime.now();
-    }
-
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: initialDate,
+      initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
     );
@@ -199,68 +247,52 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
     }
   }
 
+  /// 📌 **Gender Selector (Reduced Height)**
   Widget _buildGenderSelector() {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Gender *',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.black54,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: genderOptions.map((gender) {
-              bool isSelected = selectedGender == gender;
-              return Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    right: gender == 'Male' ? 8.0 : 0,
-                    left: gender == 'Female' ? 8.0 : 0,
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        selectedGender = gender;
-                      });
-                    },
-                    child: Container(
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: isSelected ? AppColors.themeBlue : Colors.white,
-                        border: Border.all(
-                          color: isSelected
-                              ? AppColors.themeBlue!
-                              : Colors.grey[300]!,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Text(
-                          gender,
-                          style: TextStyle(
-                            color: isSelected ? Colors.white : Colors.black87,
-                            fontWeight: isSelected
-                                ? FontWeight.bold
-                                : FontWeight.normal,
-                          ),
-                        ),
-                      ),
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        children: genderOptions.map((gender) {
+          bool isSelected = selectedGender == gender;
+          return Expanded(
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectedGender = gender;
+                });
+              },
+              child: Container(
+                height: 40, // Reduced height
+                margin: EdgeInsets.only(
+                    right: gender == "Male" ? 8.0 : 0,
+                    left: gender == "Female" ? 8.0 : 0),
+                decoration: BoxDecoration(
+                  color: isSelected ? AppColors.themeBlue : Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                      color: isSelected
+                          ? AppColors.themeBlue!
+                          : Colors.grey[300]!),
+                ),
+                child: Center(
+                  child: Text(
+                    gender,
+                    style: TextStyle(
+                      fontWeight:
+                          isSelected ? FontWeight.bold : FontWeight.normal,
+                      color: isSelected ? Colors.white : Colors.black87,
                     ),
                   ),
                 ),
-              );
-            }).toList(),
-          ),
-        ],
+              ),
+            ),
+          );
+        }).toList(),
       ),
     );
   }
 
+  /// 📌 **Save Changes Function**
   void _saveChanges() {
     if (_formKey.currentState!.validate()) {
       final updatedCard = ChildCard(
@@ -272,8 +304,24 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
         note: noteController.text,
         imageUrl: widget.card.imageUrl,
       );
-
       Navigator.pop(context, updatedCard);
+    }
+  }
+
+  Future<void> _pickImage() async {
+    try {
+      final XFile? pickedFile =
+          await _picker.pickImage(source: ImageSource.gallery);
+
+      if (pickedFile != null) {
+        setState(() {
+          _image = File(pickedFile.path);
+        });
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to pick image')),
+      );
     }
   }
 }

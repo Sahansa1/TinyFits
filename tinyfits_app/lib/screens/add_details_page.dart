@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tinyfits_app/models/child_card.dart';
+import 'package:tinyfits_app/theme/colors.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:tinyfits_app/theme/colors.dart';
 
 class AddDetailsPage extends StatefulWidget {
   const AddDetailsPage({super.key});
@@ -14,12 +14,11 @@ class AddDetailsPage extends StatefulWidget {
 
 class _AddDetailsPageState extends State<AddDetailsPage> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _dobController = TextEditingController();
-  final _genderController = TextEditingController();
-  final _heightController = TextEditingController();
-  final _weightController = TextEditingController();
-  final _noteController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _dobController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _noteController = TextEditingController();
 
   final List<String> genderOptions = ['Male', 'Female'];
   String selectedGender = 'Male';
@@ -48,73 +47,10 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
   void dispose() {
     _nameController.dispose();
     _dobController.dispose();
-    _genderController.dispose();
     _heightController.dispose();
     _weightController.dispose();
     _noteController.dispose();
     super.dispose();
-  }
-
-  Widget _buildGenderSelector() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Gender *',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.black54,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: genderOptions.map((gender) {
-              bool isSelected = selectedGender == gender;
-              return Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    right: gender == 'Male' ? 8.0 : 0,
-                    left: gender == 'Female' ? 8.0 : 0,
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        selectedGender = gender;
-                      });
-                    },
-                    child: Container(
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: isSelected ? AppColors.themeBlue : Colors.white,
-                        border: Border.all(
-                          color: isSelected
-                              ? AppColors.themeBlue!
-                              : Colors.grey[300]!,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Text(
-                          gender,
-                          style: TextStyle(
-                            color: isSelected ? Colors.white : Colors.black87,
-                            fontWeight: isSelected
-                                ? FontWeight.bold
-                                : FontWeight.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -127,7 +63,7 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -193,68 +129,61 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
                 ),
               ),
               const SizedBox(height: 24),
-              _buildTextField(
-                'Name',
-                _nameController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a name';
-                  }
-                  return null;
-                },
-              ),
-              _buildTextField(
-                'Date of Birth',
-                _dobController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter date of birth';
-                  }
-                  // Add more specific date validation if needed
-                  return null;
-                },
-              ),
-              _buildGenderSelector(),
-              _buildTextField(
-                'Height',
-                _heightController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter height';
-                  }
-                  if (!RegExp(r'^\d+(\.\d+)?$').hasMatch(value)) {
-                    return 'Please enter a valid number';
-                  }
-                  return null;
-                },
-              ),
-              _buildTextField(
-                'Weight',
-                _weightController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter weight';
-                  }
-                  if (!RegExp(r'^\d+(\.\d+)?$').hasMatch(value)) {
-                    return 'Please enter a valid number';
-                  }
-                  return null;
-                },
-              ),
-              _buildTextField(
-                'Note',
-                _noteController,
-                required: false,
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _saveChild,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.themeBlue,
-                  minimumSize: const Size(double.infinity, 50),
+
+              /// **Child Details Card**
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: AppColors.themeOrange,
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Text('Add Child'),
+                child: Column(
+                  children: [
+                    /// **Title**
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Child's Details",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+
+                    /// **Input Fields**
+                    _buildTextField("Name", _nameController),
+                    _buildTextField("Date of Birth", _dobController,
+                        isDate: true),
+                    _buildGenderSelector(),
+                    _buildTextField("Height", _heightController),
+                    _buildTextField("Weight", _weightController),
+                    _buildTextField("Add a note", _noteController,
+                        required: false),
+                    const SizedBox(height: 16),
+
+                    /// **Save Button**
+                    ElevatedButton(
+                      onPressed: _saveChild,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.themeBlue,
+                        minimumSize:
+                            const Size(double.infinity, 45), // Reduced height
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text(
+                        "Add Child",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ),
+                  ],
+                ),
               ),
+              const SizedBox(height: 16),
             ],
           ),
         ),
@@ -262,40 +191,50 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
     );
   }
 
+  /// 📌 **Reusable Input Field**
   Widget _buildTextField(
     String label,
     TextEditingController controller, {
-    String? Function(String?)? validator,
     bool required = true,
+    bool isDate = false,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 12),
       child: TextFormField(
         controller: controller,
-        readOnly: label == 'Date of Birth',
-        onTap: label == 'Date of Birth' ? () => _selectDate(context) : null,
+        readOnly: isDate,
+        onTap: isDate ? () => _selectDate(context) : null,
         decoration: InputDecoration(
-          labelText: label + (required ? ' *' : ''),
+          labelText: label,
+          filled: true,
+          fillColor: Colors.white,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
           ),
-          suffixIcon: label == 'Date of Birth'
-              ? const Icon(Icons.calendar_today)
-              : null,
+          suffixIcon: isDate ? const Icon(Icons.calendar_today) : null,
         ),
-        validator: validator ??
-            (required
-                ? (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'This field is required';
-                    }
-                    return null;
-                  }
-                : null),
+        validator: (value) {
+          if (required && (value == null || value.isEmpty)) {
+            return 'This field is required';
+          }
+          if (label == 'Weight' &&
+              (double.tryParse(value!) == null || double.parse(value) > 60)) {
+            return 'Weight must be a number and cannot exceed 60 kg';
+          }
+          if (label == 'Height' &&
+              (double.tryParse(value!) == null || double.parse(value) > 150)) {
+            return 'Height must be a number and cannot exceed 150 cm';
+          }
+          return null;
+        },
       ),
     );
   }
 
+  /// 📌 **Date Picker**
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -310,6 +249,52 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
     }
   }
 
+  /// 📌 **Gender Selector (Reduced Height)**
+  Widget _buildGenderSelector() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        children: genderOptions.map((gender) {
+          bool isSelected = selectedGender == gender;
+          return Expanded(
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectedGender = gender;
+                });
+              },
+              child: Container(
+                height: 40, // Reduced height
+                margin: EdgeInsets.only(
+                    right: gender == "Male" ? 8.0 : 0,
+                    left: gender == "Female" ? 8.0 : 0),
+                decoration: BoxDecoration(
+                  color: isSelected ? AppColors.themeBlue : Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                      color: isSelected
+                          ? AppColors.themeBlue!
+                          : Colors.grey[300]!),
+                ),
+                child: Center(
+                  child: Text(
+                    gender,
+                    style: TextStyle(
+                      fontWeight:
+                          isSelected ? FontWeight.bold : FontWeight.normal,
+                      color: isSelected ? Colors.white : Colors.black87,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  /// 📌 **Save Child Function**
   void _saveChild() {
     if (_formKey.currentState!.validate()) {
       final newChild = ChildCard(
@@ -320,7 +305,6 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
         weight: _weightController.text,
         note: _noteController.text,
       );
-
       Navigator.pop(context, newChild);
     }
   }

@@ -10,6 +10,7 @@ import 'package:tinyfits_app/screens/edit_details_page.dart';
 import 'package:tinyfits_app/theme/colors.dart';
 import 'package:tinyfits_app/screens/login.dart';
 import 'package:tinyfits_app/screens/custom_drawer.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -120,8 +121,10 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               Text(
-                                'Age: ${card.dateOfBirth}',
-                                style: const TextStyle(color: Colors.grey),
+                                'Age: ${_calculateAge(card.dateOfBirth)}',
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
                               ),
                             ],
                           ),
@@ -334,6 +337,36 @@ class _HomePageState extends State<HomePage> {
         );
       },
     );
+  }
+
+// Function to calculate age in years, months, and days
+  String _calculateAge(String dateOfBirth) {
+    try {
+      // Convert "DD/MM/YYYY" string into DateTime
+      DateTime dob = DateFormat("dd/MM/yyyy").parse(dateOfBirth);
+      DateTime today = DateTime.now();
+
+      int years = today.year - dob.year;
+      int months = today.month - dob.month;
+      int days = today.day - dob.day;
+
+      // Adjust if the birth date has not yet occurred this year
+      if (months < 0 || (months == 0 && days < 0)) {
+        years--;
+        months += (months < 0) ? 12 : 0;
+      }
+
+      // Adjust days if needed
+      if (days < 0) {
+        DateTime lastMonth = DateTime(today.year, today.month - 1, dob.day);
+        days = today.difference(lastMonth).inDays;
+        months--;
+      }
+
+      return "$years years, $months months, $days days";
+    } catch (e) {
+      return "Invalid date"; // Handle errors gracefully
+    }
   }
 
   void _logout() {
