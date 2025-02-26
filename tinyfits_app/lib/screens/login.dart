@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:tinyfits_app/screens/signup.dart';
 import 'package:tinyfits_app/screens/home_page.dart';
+import 'package:tinyfits_app/theme/colors.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -109,7 +110,7 @@ class _LoginState extends State<Login> {
                           keepMeLoggedIn = value ?? false;
                         });
                       },
-                      activeColor: Colors.blue[400],
+                      activeColor: AppColors.themeBlue,
                     ),
                     const Text(
                       'Keep me logged in',
@@ -123,7 +124,7 @@ class _LoginState extends State<Login> {
                   },
                   child: Text(
                     'Forgot password?',
-                    style: TextStyle(color: Colors.blue[400]),
+                    style: TextStyle(color: AppColors.themeBlue),
                   ),
                 ),
               ],
@@ -132,7 +133,7 @@ class _LoginState extends State<Login> {
             ElevatedButton(
               onPressed: _handleLogin,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue[400],
+                backgroundColor: AppColors.themeBlue,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 shape: RoundedRectangleBorder(
@@ -161,7 +162,7 @@ class _LoginState extends State<Login> {
                     },
                     child: Text(
                       'Sign Up',
-                      style: TextStyle(color: Colors.blue[400]),
+                      style: TextStyle(color: AppColors.themeBlue),
                     ),
                   ),
                 ],

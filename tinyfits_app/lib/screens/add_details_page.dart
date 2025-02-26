@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tinyfits_app/models/child_card.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:tinyfits_app/theme/colors.dart';
 
 class AddDetailsPage extends StatefulWidget {
   const AddDetailsPage({super.key});
@@ -19,6 +23,26 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
 
   final List<String> genderOptions = ['Male', 'Female'];
   String selectedGender = 'Male';
+
+  File? _image;
+  final _picker = ImagePicker();
+
+  Future<void> _pickImage() async {
+    try {
+      final XFile? pickedFile =
+          await _picker.pickImage(source: ImageSource.gallery);
+
+      if (pickedFile != null) {
+        setState(() {
+          _image = File(pickedFile.path);
+        });
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to pick image')),
+      );
+    }
+  }
 
   @override
   void dispose() {
@@ -63,10 +87,10 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
                     child: Container(
                       height: 48,
                       decoration: BoxDecoration(
-                        color: isSelected ? Colors.blue[200] : Colors.white,
+                        color: isSelected ? AppColors.themeBlue : Colors.white,
                         border: Border.all(
                           color: isSelected
-                              ? Colors.blue[200]!
+                              ? AppColors.themeBlue!
                               : Colors.grey[300]!,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -113,6 +137,62 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
           key: _formKey,
           child: Column(
             children: [
+              Center(
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 120,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.grey[300]!),
+                      ),
+                      child: _image != null
+                          ? ClipOval(
+                              child: kIsWeb
+                                  ? Image.network(
+                                      _image!.path,
+                                      width: 120,
+                                      height: 120,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.file(
+                                      _image!,
+                                      width: 120,
+                                      height: 120,
+                                      fit: BoxFit.cover,
+                                    ),
+                            )
+                          : Icon(
+                              Icons.person,
+                              size: 60,
+                              color: Colors.grey[400],
+                            ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: _pickImage,
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: const BoxDecoration(
+                            color: AppColors.themeBlue,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.camera_alt,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
               _buildTextField(
                 'Name',
                 _nameController,
@@ -170,7 +250,7 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
               ElevatedButton(
                 onPressed: _saveChild,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[200],
+                  backgroundColor: AppColors.themeBlue,
                   minimumSize: const Size(double.infinity, 50),
                 ),
                 child: const Text('Add Child'),

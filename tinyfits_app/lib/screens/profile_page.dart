@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tinyfits_app/models/child_card.dart';
 import 'package:tinyfits_app/screens/edit_details_page.dart';
+import 'package:tinyfits_app/theme/colors.dart';
 
 class ProfilePage extends StatelessWidget {
   final ChildCard card;
@@ -55,7 +56,7 @@ class ProfilePage extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue[200],
+                        backgroundColor: AppColors.themeBlue,
                       ),
                       child: const Text('Clothing'),
                     ),
@@ -64,7 +65,7 @@ class ProfilePage extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () => _navigateToEdit(context),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[200],
+                      backgroundColor: AppColors.themeBlue,
                     ),
                     child: const Text('Edit'),
                   ),

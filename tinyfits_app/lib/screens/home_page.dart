@@ -6,6 +6,7 @@ import 'package:tinyfits_app/screens/clothing_page.dart';
 import 'package:tinyfits_app/screens/help_support_page.dart';
 import 'package:tinyfits_app/screens/privacy_policy_page.dart';
 import 'package:tinyfits_app/screens/about_page.dart';
+import 'package:tinyfits_app/theme/colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,12 +18,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<ChildCard> cards = [];
   final List<Color> cardColors = [
-    Color(0xFFF6CC84), // Orange
-    Color(0xFFBD84F6), // Purple
-    Color(0xFF9CDBC8), // Mint
-    Color(0xFF94ACFF), // Blue
-    Color(0xFFF684A3), // Pink
-    Color(0xFFED9B5F), // Dark Orange
+    AppColors.themeOrange,
+    AppColors.themePurple,
+    AppColors.themeGreen,
+    AppColors.themeBlue,
+    AppColors.themePink,
+    AppColors.themePeach,
   ];
 
   Color getCardColor(int index) {
@@ -63,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                       vertical: 20,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.blue[200],
+                      color: AppColors.themeBlue,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Text(
@@ -166,7 +167,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: AppColors.themeBlue,
               ),
               child: Text(
                 'Menu',

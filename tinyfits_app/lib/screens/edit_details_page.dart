@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tinyfits_app/models/child_card.dart';
+import 'package:tinyfits_app/theme/colors.dart';
 
 class EditDetailsPage extends StatefulWidget {
   final ChildCard card;
@@ -125,7 +126,7 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
               ElevatedButton(
                 onPressed: _saveChanges,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[200],
+                  backgroundColor: AppColors.themeBlue,
                   minimumSize: const Size(double.infinity, 50),
                 ),
                 child: const Text('Save Changes'),
@@ -198,10 +199,10 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
                     child: Container(
                       height: 48,
                       decoration: BoxDecoration(
-                        color: isSelected ? Colors.blue[200] : Colors.white,
+                        color: isSelected ? AppColors.themeBlue : Colors.white,
                         border: Border.all(
                           color: isSelected
-                              ? Colors.blue[200]!
+                              ? AppColors.themeBlue!
                               : Colors.grey[300]!,
                         ),
                         borderRadius: BorderRadius.circular(8),

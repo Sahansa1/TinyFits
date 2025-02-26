@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinyfits_app/theme/colors.dart';
 
 class PrivacyPolicyPage extends StatelessWidget {
   const PrivacyPolicyPage({super.key});
@@ -129,7 +130,7 @@ class PrivacyPolicyPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.blue.shade50,
+        color: AppColors.themeBlue,
         borderRadius: BorderRadius.circular(8),
       ),
       child: const Column(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tinyfits_app/screens/login.dart';
+import 'package:tinyfits_app/theme/colors.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -178,7 +179,7 @@ class _SignUpState extends State<SignUp> {
                         rememberPassword = value ?? false;
                       });
                     },
-                    activeColor: Colors.blue[400],
+                    activeColor: AppColors.themeBlue,
                   ),
                   const Text(
                     'Remember password',
@@ -198,7 +199,7 @@ class _SignUpState extends State<SignUp> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[400],
+                  backgroundColor: AppColors.themeBlue,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
@@ -228,7 +229,7 @@ class _SignUpState extends State<SignUp> {
                       },
                       child: Text(
                         'Log in',
-                        style: TextStyle(color: Colors.blue[400]),
+                        style: TextStyle(color: AppColors.themeBlue),
                       ),
                     ),
                   ],

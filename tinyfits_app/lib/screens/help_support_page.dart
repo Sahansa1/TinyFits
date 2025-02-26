@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinyfits_app/theme/colors.dart';
 
 class HelpSupportPage extends StatelessWidget {
   const HelpSupportPage({super.key});
@@ -20,7 +21,7 @@ class HelpSupportPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.blue,
+                  color: AppColors.themeBlue,
                 ),
               ),
               const SizedBox(height: 8),
@@ -62,14 +63,14 @@ class ContactSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.blue.shade50,
+        color: AppColors.themeBlue,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         children: [
           Icon(
             Icons.email_outlined,
-            color: Colors.blue.shade700,
+            color: AppColors.themeBlue,
             size: 32,
           ),
           const SizedBox(width: 16),
@@ -87,7 +88,7 @@ class ContactSection extends StatelessWidget {
               Text(
                 'support@tinyfits.com',
                 style: TextStyle(
-                  color: Colors.blue.shade700,
+                  color: AppColors.themeBlue,
                   decoration: TextDecoration.underline,
                 ),
               ),
