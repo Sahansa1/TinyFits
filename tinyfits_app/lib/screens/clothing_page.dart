@@ -43,7 +43,11 @@ class ClothingPage extends StatelessWidget {
           ),
         ],
       ),
-      endDrawer: const CustomDrawer(),
+      //**************************************************************************************************************************** */
+      endDrawer: CustomDrawer(
+        userName: "John Doe", //HARDCORDED
+        userEmail: "johndoe@email.com", // HARDCORDED
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

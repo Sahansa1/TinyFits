@@ -192,7 +192,11 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      endDrawer: const CustomDrawer(),
+      //**************************************************************************************** */
+      endDrawer: CustomDrawer(
+        userName: "John Doe", //HARDCORDED
+        userEmail: "johndoe@email.com", // HARDCORDED
+      ),
       body: Column(
         children: [
           if (cards.isEmpty)
@@ -210,7 +214,7 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Text(
-                      'Add a card',
+                      'Add a Child’s Profile',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tinyfits_app/models/child_card.dart';
 import 'package:tinyfits_app/theme/colors.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tinyfits_app/screens/past_measurements_page .dart';
 import 'dart:io';
 
 class EditDetailsPage extends StatefulWidget {
@@ -343,9 +344,22 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
             color: Colors.white,
             size: 20,
           ),
-          onPressed: () {
-            // Handle history button press
-            print('Show history for ${label.toLowerCase()}');
+          onPressed: () async {
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PastMeasurementsPage(
+                  pastMeasurements: pastRecords, // Pass stored data
+                ),
+              ),
+            );
+
+            // Update past records when coming back from PastMeasurementsPage
+            if (result != null) {
+              setState(() {
+                pastRecords = result; // Store updated past measurements
+              });
+            }
           },
         ),
       );
@@ -353,3 +367,5 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
     return null;
   }
 }
+
+List<Map<String, dynamic>> pastRecords = [];
