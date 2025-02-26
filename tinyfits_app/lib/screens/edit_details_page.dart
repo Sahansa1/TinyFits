@@ -156,8 +156,8 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
                     _buildTextField("Date of Birth", dobController,
                         isDate: true),
                     _buildGenderSelector(),
-                    _buildTextField("Height", heightController),
-                    _buildTextField("Weight", weightController),
+                    _buildTextField("Height (in cm)", heightController),
+                    _buildTextField("Weight (in kg)", weightController),
                     _buildTextField("Add a note", noteController,
                         required: false),
                     const SizedBox(height: 16),
@@ -212,17 +212,17 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide.none,
           ),
-          suffixIcon: isDate ? const Icon(Icons.calendar_today) : null,
+          suffixIcon: _getSuffixIcon(label, isDate),
         ),
         validator: (value) {
           if (required && (value == null || value.isEmpty)) {
             return 'This field is required';
           }
-          if (label == 'Weight' &&
+          if (label == 'Weight (in kg)' &&
               (double.tryParse(value!) == null || double.parse(value) > 60)) {
             return 'Weight must be a number and cannot exceed 60 kg';
           }
-          if (label == 'Height' &&
+          if (label == 'Height (in cm)' &&
               (double.tryParse(value!) == null || double.parse(value) > 150)) {
             return 'Height must be a number and cannot exceed 150 cm';
           }
@@ -323,5 +323,33 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
         const SnackBar(content: Text('Failed to pick image')),
       );
     }
+  }
+
+  Widget? _getSuffixIcon(String label, bool isDate) {
+    if (isDate) {
+      return const Icon(Icons.calendar_today);
+    } else if (label.contains('Height') || label.contains('Weight')) {
+      return Container(
+        margin: const EdgeInsets.all(8),
+        decoration: const BoxDecoration(
+          color: AppColors.themeBlue,
+          shape: BoxShape.circle,
+        ),
+        child: IconButton(
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints(),
+          icon: const Icon(
+            Icons.history,
+            color: Colors.white,
+            size: 20,
+          ),
+          onPressed: () {
+            // Handle history button press
+            print('Show history for ${label.toLowerCase()}');
+          },
+        ),
+      );
+    }
+    return null;
   }
 }

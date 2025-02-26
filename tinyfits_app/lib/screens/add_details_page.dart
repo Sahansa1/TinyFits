@@ -158,8 +158,8 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
                     _buildTextField("Date of Birth", _dobController,
                         isDate: true),
                     _buildGenderSelector(),
-                    _buildTextField("Height", _heightController),
-                    _buildTextField("Weight", _weightController),
+                    _buildTextField("Height (in cm)", _heightController),
+                    _buildTextField("Weight (in kg)", _weightController),
                     _buildTextField("Add a note", _noteController,
                         required: false),
                     const SizedBox(height: 16),
@@ -220,11 +220,11 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
           if (required && (value == null || value.isEmpty)) {
             return 'This field is required';
           }
-          if (label == 'Weight' &&
+          if (label == 'Weight (in kg)' &&
               (double.tryParse(value!) == null || double.parse(value) > 60)) {
             return 'Weight must be a number and cannot exceed 60 kg';
           }
-          if (label == 'Height' &&
+          if (label == 'Height (in cm)' &&
               (double.tryParse(value!) == null || double.parse(value) > 150)) {
             return 'Height must be a number and cannot exceed 150 cm';
           }

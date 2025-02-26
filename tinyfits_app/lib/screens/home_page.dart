@@ -228,65 +228,41 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   final card = cards[index];
                   return GestureDetector(
-                    onTap: () {}, // Add navigation logic if needed
+                    onTap: () => _navigateToProfile(card),
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 16),
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: getCardColor(index),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
                         children: [
-                          /// **Profile Image / Placeholder**
                           CircleAvatar(
-                            radius: 40,
-                            backgroundColor: Colors.white,
+                            radius: 30,
                             backgroundImage: card.imageUrl != null
                                 ? NetworkImage(card.imageUrl!)
                                 : null,
                             child: card.imageUrl == null
-                                ? const Icon(Icons.person, size: 40)
+                                ? const Icon(Icons.person)
                                 : null,
                           ),
                           const SizedBox(width: 16),
-
-                          /// **Name & Age**
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  card.name,
-                                  style: const TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  'Age: ${_calculateAge(card.dateOfBirth)}',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          /// **Buttons (Clothing & Delete)**
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              IconButton(
-                                icon: const Icon(Icons.checkroom,
-                                    color: Colors.white),
-                                onPressed: _navigateToClothing,
+                              Text(
+                                card.name,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              IconButton(
-                                icon: const Icon(Icons.delete,
-                                    color: Colors.white),
-                                onPressed: () => _deleteCard(index),
+                              Text(
+                                'Age: ${_calculateAge(card.dateOfBirth)}',
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
                               ),
                             ],
                           ),
