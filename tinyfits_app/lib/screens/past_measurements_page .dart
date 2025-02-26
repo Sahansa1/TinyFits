@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinyfits_app/theme/colors.dart';
 
 class PastMeasurementsPage extends StatefulWidget {
   final List<Map<String, dynamic>> pastMeasurements;
@@ -19,26 +20,48 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
   @override
   void initState() {
     super.initState();
-    pastRecords = List.from(widget.pastMeasurements ?? []);
+    pastRecords = List.from(widget.pastMeasurements);
   }
 
-  /// **Function to Add a Record**
   void _addRecord() {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        pastRecords.add({
-          'date': _dateController.text,
-          'height': double.parse(_heightController.text),
-          'weight': double.parse(_weightController.text),
-        });
-        _dateController.clear();
-        _heightController.clear();
-        _weightController.clear();
-      });
+    if (_dateController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please select a date"),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+      return;
     }
+
+    if (_heightController.text.isEmpty && _weightController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Enter at least one measurement (Height or Weight)"),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      pastRecords.add({
+        'date': _dateController.text,
+        'height': _heightController.text.isNotEmpty
+            ? double.parse(_heightController.text)
+            : null,
+        'weight': _weightController.text.isNotEmpty
+            ? double.parse(_weightController.text)
+            : null,
+      });
+
+      // Clear fields after adding record
+      _dateController.clear();
+      _heightController.clear();
+      _weightController.clear();
+    });
   }
 
-  /// **Function to Delete a Record**
   void _deleteRecord(int index) {
     showDialog(
       context: context,
@@ -124,22 +147,6 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
     );
   }
 
-  /// **Function to Pick a Date**
-  Future<void> _selectDate() async {
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime.now(),
-    );
-    if (pickedDate != null) {
-      setState(() {
-        _dateController.text =
-            "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,7 +160,7 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            /// **Input Form Section**
+            /// **Form Section**
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -181,37 +188,42 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
                             labelText: "Date (YYYY-MM-DD)",
                             suffixIcon: IconButton(
                               icon: const Icon(Icons.calendar_today),
-                              onPressed: _selectDate,
+                              onPressed: () async {
+                                DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime.now(),
+                                );
+                                if (pickedDate != null) {
+                                  _dateController.text =
+                                      "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+                                }
+                              },
                             ),
                           ),
-                          validator: (value) =>
-                              value!.isEmpty ? "Enter a valid date" : null,
                         ),
                         const SizedBox(height: 8),
                         TextFormField(
                           controller: _heightController,
                           decoration: const InputDecoration(
-                            labelText: "Height (cm)",
+                            labelText: "Height (cm) - Optional",
                           ),
                           keyboardType: TextInputType.number,
-                          validator: (value) =>
-                              value!.isEmpty ? "Enter a valid height" : null,
                         ),
                         const SizedBox(height: 8),
                         TextFormField(
                           controller: _weightController,
                           decoration: const InputDecoration(
-                            labelText: "Weight (kg)",
+                            labelText: "Weight (kg) - Optional",
                           ),
                           keyboardType: TextInputType.number,
-                          validator: (value) =>
-                              value!.isEmpty ? "Enter a valid weight" : null,
                         ),
                         const SizedBox(height: 16),
                         ElevatedButton(
                           onPressed: _addRecord,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
+                            backgroundColor: AppColors.themeBlue,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -229,7 +241,7 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
             ),
             const SizedBox(height: 20),
 
-            /// **List of Past Records**
+            /// **List of past records**
             if (pastRecords.isNotEmpty) ...[
               const Text(
                 "Previous Records",
@@ -242,8 +254,17 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
                     margin: const EdgeInsets.only(bottom: 10),
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.blue[50],
+                      color: Colors.white, // White background
                       borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey
+                              .withOpacity(0.3), // Soft shadow effect
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: const Offset(0, 2), // Shadow placement
+                        ),
+                      ],
                     ),
                     child: ListTile(
                       title: Text(
@@ -251,12 +272,23 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
-                        "Height: ${record['height']} cm | Weight: ${record['weight']} kg",
+                        "Height: ${record['height'] ?? 'N/A'} cm | Weight: ${record['weight'] ?? 'N/A'} kg",
+                        style: TextStyle(color: Colors.grey[700]),
                       ),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete, color: Colors.red),
-                        onPressed: () =>
-                            _deleteRecord(pastRecords.indexOf(record)),
+                      trailing: GestureDetector(
+                        onTap: () => _deleteRecord(pastRecords.indexOf(record)),
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: AppColors.themeBlue, // Theme Blue Circle
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.delete,
+                            color: Colors.white, // White delete icon
+                            size: 20,
+                          ),
+                        ),
                       ),
                     ),
                   );
