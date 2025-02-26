@@ -4,6 +4,7 @@ import 'package:tinyfits_app/theme/colors.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:tinyfits_app/screens/past_measurements_page .dart';
 
 class AddDetailsPage extends StatefulWidget {
   const AddDetailsPage({super.key});
@@ -214,7 +215,7 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide.none,
           ),
-          suffixIcon: isDate ? const Icon(Icons.calendar_today) : null,
+          suffixIcon: _getSuffixIcon(label, isDate),
         ),
         validator: (value) {
           if (required && (value == null || value.isEmpty)) {
@@ -308,4 +309,47 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
       Navigator.pop(context, newChild);
     }
   }
+
+  Widget? _getSuffixIcon(String label, bool isDate) {
+    if (isDate) {
+      return const Icon(Icons.calendar_today);
+    } else if (label.contains('Height') || label.contains('Weight')) {
+      return Container(
+        margin: const EdgeInsets.all(8),
+        decoration: const BoxDecoration(
+          color: AppColors.themeBlue,
+          shape: BoxShape.circle,
+        ),
+        child: IconButton(
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints(),
+          icon: const Icon(
+            Icons.history,
+            color: Colors.white,
+            size: 20,
+          ),
+          onPressed: () async {
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PastMeasurementsPage(
+                  pastMeasurements: pastRecords, // Pass stored data
+                ),
+              ),
+            );
+
+            // Update past records when coming back from PastMeasurementsPage
+            if (result != null) {
+              setState(() {
+                pastRecords = result; // Store updated past measurements
+              });
+            }
+          },
+        ),
+      );
+    }
+    return null;
+  }
 }
+
+List<Map<String, dynamic>> pastRecords = [];
