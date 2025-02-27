@@ -134,13 +134,15 @@ class _LoginState extends State<Login> {
               onPressed: _handleLogin,
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.themeBlue,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 14),
+                minimumSize: const Size(double.infinity, 45), // Reduced height
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: const Text('Log in'),
+              child: const Text(
+                "Log in",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
             ),
             const Spacer(),
             const Divider(),

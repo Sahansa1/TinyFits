@@ -200,13 +200,16 @@ class _SignUpState extends State<SignUp> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.themeBlue,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  minimumSize:
+                      const Size(double.infinity, 45), // Reduced height
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: const Text('Sign Up'),
+                child: const Text(
+                  "Sign up",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
               ),
               const Spacer(),
               const Divider(),

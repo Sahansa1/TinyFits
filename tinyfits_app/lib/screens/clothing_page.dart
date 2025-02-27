@@ -4,6 +4,7 @@ import 'package:tinyfits_app/screens/add_details_page.dart';
 import 'package:tinyfits_app/screens/tops_page.dart';
 import 'package:tinyfits_app/screens/pants_page.dart';
 import 'package:tinyfits_app/screens/custom_drawer.dart';
+import 'package:tinyfits_app/screens/home_page.dart';
 
 class ClothingPage extends StatelessWidget {
   const ClothingPage({super.key});
@@ -139,6 +140,10 @@ class ClothingPage extends StatelessWidget {
               break;
             case 2:
               Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+              );
               break;
           }
         },
