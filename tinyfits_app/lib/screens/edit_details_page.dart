@@ -59,13 +59,12 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Edit Details'),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
+        title: Image.asset(
+          'assets/logo3.png',
+          height: 40,
         ),
+        backgroundColor: Colors.white,
+        elevation: 2,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

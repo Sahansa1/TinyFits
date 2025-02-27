@@ -124,6 +124,7 @@ import 'package:tinyfits_app/screens/edit_details_page.dart';
 import 'package:tinyfits_app/screens/past_measurements_page.dart';
 import 'package:tinyfits_app/theme/colors.dart';
 import 'package:tinyfits_app/screens/custom_drawer.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatelessWidget {
   final ChildCard card;
@@ -141,7 +142,7 @@ class ProfilePage extends StatelessWidget {
           height: 40,
         ),
         backgroundColor: Colors.white,
-        elevation: 0,
+        elevation: 2,
         actions: [
           Builder(
             builder: (context) => IconButton(
@@ -151,7 +152,7 @@ class ProfilePage extends StatelessWidget {
           ),
         ],
       ),
-      //**************************************************************************************** */
+      // **************************************************************************************** */
       endDrawer: CustomDrawer(
         userName: "John Doe", //HARDCORDED
         userEmail: "johndoe@email.com", // HARDCORDED
@@ -164,7 +165,7 @@ class ProfilePage extends StatelessWidget {
             /// **Header Section with "Tops" Title**
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
@@ -180,7 +181,7 @@ class ProfilePage extends StatelessWidget {
                 child: Text(
                   'Profile',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -242,9 +243,9 @@ class ProfilePage extends StatelessWidget {
                           bottom: 5,
                           right: 5,
                           child: GestureDetector(
-                            onTap: () {
-                              // TODO: Implement Image Picker
-                            },
+                            //  onTap: _pickImage,
+                            // TODO: Implement Image Picker
+
                             child: Container(
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
@@ -285,7 +286,7 @@ class ProfilePage extends StatelessWidget {
                   /// **Age Display**
                   Text(
                     "Age: ${_calculateAge(card.dateOfBirth)}",
-                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                    style: const TextStyle(fontSize: 14, color: Colors.white),
                   ),
 
                   const SizedBox(height: 16),
@@ -393,6 +394,23 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
+
+  // Future<void> _pickImage() async {
+  //   try {
+  //     final XFile? pickedFile =
+  //         await _picker.pickImage(source: ImageSource.gallery);
+
+  //     if (pickedFile != null) {
+  //       setState(() {
+  //         _image = File(pickedFile.path);
+  //       });
+  //     }
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text('Failed to pick image')),
+  //     );
+  //   }
+  // }
 
   /// **User Info Row**
   Widget _buildInfoRow(String label, String value) {

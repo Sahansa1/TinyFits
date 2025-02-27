@@ -108,7 +108,8 @@ class TopsPage extends StatelessWidget {
           height: 40,
         ),
         backgroundColor: Colors.white,
-        elevation: 0,
+        elevation: 3,
+        shadowColor: Colors.black26,
         actions: [
           Builder(
             builder: (context) => IconButton(
@@ -221,7 +222,7 @@ class TopsPage extends StatelessWidget {
             /// **Header Section with "Tops" Title**
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
@@ -237,7 +238,7 @@ class TopsPage extends StatelessWidget {
                 child: Text(
                   'Tops',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

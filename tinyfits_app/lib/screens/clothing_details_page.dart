@@ -280,7 +280,8 @@ class _ClothingDetailsPageState extends State<ClothingDetailsPage> {
         title: Text(widget.item['name']),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        elevation: 0,
+        elevation: 3,
+        shadowColor: Colors.black26,
         actions: [
           IconButton(
             icon: Icon(

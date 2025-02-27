@@ -150,11 +150,15 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Past Measurements'),
+        centerTitle: true,
+        title: Image.asset(
+          'assets/logo3.png',
+          height: 40,
+        ),
         backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
+        elevation: 2,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

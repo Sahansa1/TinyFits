@@ -5,6 +5,7 @@ import 'package:tinyfits_app/screens/tops_page.dart';
 import 'package:tinyfits_app/screens/pants_page.dart';
 import 'package:tinyfits_app/screens/custom_drawer.dart';
 import 'package:tinyfits_app/screens/home_page.dart';
+import 'package:tinyfits_app/theme/colors.dart';
 
 class ClothingPage extends StatelessWidget {
   const ClothingPage({super.key});
@@ -34,7 +35,8 @@ class ClothingPage extends StatelessWidget {
           height: 40,
         ),
         backgroundColor: Colors.white,
-        elevation: 0,
+        elevation: 3,
+        shadowColor: Colors.black26,
         actions: [
           Builder(
             builder: (context) => IconButton(
@@ -110,11 +112,16 @@ class ClothingPage extends StatelessWidget {
           ],
         ),
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
+        selectedItemColor: AppColors.themeBlue,
+        unselectedItemColor: AppColors.themeBlue,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.checkroom),
+            icon: Icon(
+              Icons.checkroom,
+            ),
             label: 'Clothing',
           ),
           BottomNavigationBarItem(
