@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tinyfits_app/screens/add_details_page.dart';
 import 'package:tinyfits_app/screens/tops_page.dart';
 import 'package:tinyfits_app/screens/pants_page.dart';
 import 'package:tinyfits_app/screens/custom_drawer.dart';
-import 'package:tinyfits_app/screens/clothing_details_page.dart';
+import 'package:tinyfits_app/screens/profile_page.dart';
+import 'package:tinyfits_app/screens/clothing_page.dart';
 import 'package:tinyfits_app/screens/home_page.dart';
+import 'package:tinyfits_app/screens/child_clothing_details_page.dart';
 import 'package:tinyfits_app/theme/colors.dart';
+import 'package:tinyfits_app/models/child_card.dart';
 
-class ClothingPage extends StatelessWidget {
-  const ClothingPage({super.key});
+class ChildClothingPage extends StatelessWidget {
+  final ChildCard child;
+
+  const ChildClothingPage({super.key, required this.child});
 
   void _navigateToTops(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const TopsPage()),
+      MaterialPageRoute(
+        builder: (context) => const TopsPage(),
+      ),
     );
   }
 
   void _navigateToPants(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const PantsPage()),
+      MaterialPageRoute(
+        builder: (context) => const PantsPage(),
+      ),
     );
   }
 
@@ -105,6 +113,8 @@ class ClothingPage extends StatelessWidget {
     ];
     return Scaffold(
       backgroundColor: Colors.white,
+
+      /// **App Bar**
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(
@@ -123,16 +133,20 @@ class ClothingPage extends StatelessWidget {
           ),
         ],
       ),
-      //**************************************************************************************************************************** */
+
+      /// **Side Drawer**
       endDrawer: CustomDrawer(
-        userName: "John Doe", //HARDCORDED
-        userEmail: "johndoe@email.com", // HARDCORDED
+        userName: child.name,
+        userEmail: "User Email Here",
       ),
+
+      /// **Body Content**
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            /// **Categories Section**
             const Text(
               'Categories',
               style: TextStyle(
@@ -165,6 +179,8 @@ class ClothingPage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 32),
+
+            /// **Items Section**
             const Text(
               'Items',
               style: TextStyle(
@@ -174,10 +190,6 @@ class ClothingPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            /// **Spacing Before Grid**
-            // const SizedBox(height: 12),
-
-            /// **Expanded GridView**
             Expanded(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -192,12 +204,12 @@ class ClothingPage extends StatelessWidget {
 
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ClothingDetailsPage(item: item),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => ClothingDetailsPage(item: item),
+                      //   ),
+                      // );
                     },
                     child: Card(
                       elevation: 3,
@@ -269,20 +281,46 @@ class ClothingPage extends StatelessWidget {
         ),
       ),
 
+      /// **Bottom Navigation Bar**
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
         selectedItemColor: Colors.grey,
         unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.checkroom,
-            ),
+        items: [
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.checkroom),
             label: 'Clothing',
           ),
+
+          /// **Child Profile Image or Initial**
           BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'Add',
+            icon: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePage(card: child),
+                  ),
+                );
+              },
+              child: CircleAvatar(
+                radius: 15,
+                backgroundColor: Colors.grey[300],
+                backgroundImage: child.imageUrl != null
+                    ? NetworkImage(child.imageUrl!)
+                    : null,
+                child: child.imageUrl == null
+                    ? Text(
+                        child.name[0].toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    : null,
+              ),
+            ),
+            label: child.name,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -290,52 +328,66 @@ class ClothingPage extends StatelessWidget {
           ),
         ],
         onTap: (index) {
-          switch (index) {
-            case 0:
-              // Already on clothing page
-              break;
-            case 1:
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AddDetailsPage()),
-              );
-              break;
-            case 2:
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const HomePage()),
-              );
-              break;
+          if (index == 0) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ClothingPage()),
+            );
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProfilePage(card: child),
+              ),
+            );
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
           }
         },
       ),
     );
   }
 
-  Widget _buildItemCard(String title) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+  /// **Builds a Clothing Item Card**
+  Widget _buildItemCard(BuildContext context, String title) {
+    return GestureDetector(
+      onTap: () {
+        // // Navigate to child-specific clothing details page
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => ChildClothingDetailsPage(
+
+        //       child: child,
+        //     ),
+        //   ),
+        // );
+      },
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          IconButton(
-            icon: const Icon(Icons.favorite_border),
-            onPressed: () {},
-          ),
-        ],
+            const SizedBox(height: 8),
+            IconButton(
+              icon: const Icon(Icons.favorite_border),
+              onPressed: () {},
+            ),
+          ],
+        ),
       ),
     );
   }

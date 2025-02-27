@@ -125,6 +125,7 @@ import 'package:tinyfits_app/screens/past_measurements_page.dart';
 import 'package:tinyfits_app/theme/colors.dart';
 import 'package:tinyfits_app/screens/custom_drawer.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tinyfits_app/screens/child_clothing_page.dart';
 
 class ProfilePage extends StatelessWidget {
   final ChildCard card;
@@ -311,7 +312,23 @@ class ProfilePage extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      // Navigate to Clothing Page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChildClothingPage(
+                            child: card, // pass child data
+                          ),
+                        ),
+                      );
+                      //                    Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //  builder: (context) => ChildClothingDetailsPage(
+                      //       // item: selectedItem,  // The selected clothing item
+                      //       // child: selectedChild, // The specific child profile
+                      //     ),
+                      //   ),
+                      // );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.themeBlue,
