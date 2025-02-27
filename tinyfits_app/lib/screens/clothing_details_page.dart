@@ -572,112 +572,251 @@ class _ClothingDetailsPageState extends State<ClothingDetailsPage> {
 
             const SizedBox(height: 16),
 
-            /// **Size & Colors Selection (Side by Side)**
+            // /// **Size & Colors Selection inside Equal Sized Cards**
+            // Row(
+            //   children: [
+            //     /// **Size Selection (Inside a Uniform Card)**
+            //     Expanded(
+            //       child: Card(
+            //         elevation: 0.1,
+            //         shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.circular(12)),
+            //         color: Colors.white,
+            //         shadowColor: Colors.grey.withOpacity(0.9),
+            //         child: Padding(
+            //           padding: const EdgeInsets.all(16),
+            //           child: Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             children: [
+            //               const Text(
+            //                 "Available Sizes",
+            //                 style: TextStyle(
+            //                     fontSize: 18, fontWeight: FontWeight.bold),
+            //               ),
+            //               const SizedBox(height: 9),
+            //               Wrap(
+            //                 spacing: 10,
+            //                 children: widget.item['sizes'].map<Widget>((size) {
+            //                   return GestureDetector(
+            //                     onTap: () => _selectSize(size),
+            //                     child: AnimatedContainer(
+            //                       duration: const Duration(milliseconds: 300),
+            //                       padding: const EdgeInsets.symmetric(
+            //                           horizontal: 16, vertical: 10),
+            //                       decoration: BoxDecoration(
+            //                         color: _selectedSize == size
+            //                             ? AppColors.themeBlue
+            //                             : Colors.white,
+            //                         borderRadius: BorderRadius.circular(8),
+            //                         border: Border.all(
+            //                           color: _selectedSize == size
+            //                               ? AppColors.themeBlue
+            //                               : Colors.grey,
+            //                           width: 1.5,
+            //                         ),
+            //                         boxShadow: [
+            //                           if (_selectedSize == size)
+            //                             BoxShadow(
+            //                               color: AppColors.themeBlue
+            //                                   .withOpacity(0.3),
+            //                               blurRadius: 5,
+            //                               spreadRadius: 1,
+            //                             ),
+            //                         ],
+            //                       ),
+            //                       child: Text(
+            //                         size,
+            //                         style: TextStyle(
+            //                           fontSize: 16,
+            //                           fontWeight: FontWeight.bold,
+            //                           color: _selectedSize == size
+            //                               ? Colors.white
+            //                               : Colors.black,
+            //                         ),
+            //                       ),
+            //                     ),
+            //                   );
+            //                 }).toList(),
+            //               ),
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+
+            //     const SizedBox(width: 12), // **Spacing between cards**
+
+            //     /// **Available Colors (Inside a Uniform Card)**
+            //     Expanded(
+            //       child: Card(
+            //         elevation: 1,
+            //         shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.circular(12)),
+            //         color: Colors.white,
+            //         shadowColor: Colors.grey.withOpacity(0.3), // Subtle Shadow
+            //         child: Padding(
+            //           padding: const EdgeInsets.all(16),
+            //           child: Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             children: [
+            //               const Text(
+            //                 "Available Colors",
+            //                 style: TextStyle(
+            //                     fontSize: 18, fontWeight: FontWeight.bold),
+            //               ),
+            //               const SizedBox(height: 12),
+            //               Wrap(
+            //                 spacing: 10,
+            //                 children:
+            //                     widget.item['colors'].map<Widget>((color) {
+            //                   return GestureDetector(
+            //                     onTap: () => _selectColor(color),
+            //                     child: CircleAvatar(
+            //                       radius:
+            //                           20, // **Same size for all color bubbles**
+            //                       backgroundColor: _selectedColor == color
+            //                           ? Colors.black
+            //                           : Colors.grey[300],
+            //                       child: CircleAvatar(
+            //                         radius: 16,
+            //                         backgroundColor: _getColorFromName(color),
+            //                       ),
+            //                     ),
+            //                   );
+            //                 }).toList(),
+            //               ),
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+
+            /// **Size & Colors Selection inside Equal Sized Cards**
             Row(
               children: [
-                /// **Size Selection**
+                /// **Size Selection (Inside a Uniform Card)**
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Available Sizes",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 10),
-                      Wrap(
-                        spacing: 8,
-                        children: widget.item['sizes'].map<Widget>((size) {
-                          return GestureDetector(
-                            onTap: () => _selectSize(size),
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 300),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 10),
-                              decoration: BoxDecoration(
-                                color: _selectedSize == size
-                                    ? AppColors.themeBlue
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.15),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Available Sizes",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 9),
+                        Wrap(
+                          spacing: 10,
+                          children: widget.item['sizes'].map<Widget>((size) {
+                            return GestureDetector(
+                              onTap: () => _selectSize(size),
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 300),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 10),
+                                decoration: BoxDecoration(
                                   color: _selectedSize == size
                                       ? AppColors.themeBlue
-                                      : Colors.grey,
-                                  width: 1.5,
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: _selectedSize == size
+                                        ? AppColors.themeBlue
+                                        : Colors.grey,
+                                    width: 1.5,
+                                  ),
+                                  boxShadow: [
+                                    if (_selectedSize == size)
+                                      BoxShadow(
+                                        color: AppColors.themeBlue
+                                            .withOpacity(0.3),
+                                        blurRadius: 5,
+                                        spreadRadius: 1,
+                                      ),
+                                  ],
+                                ),
+                                child: Text(
+                                  size,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: _selectedSize == size
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
                                 ),
                               ),
-                              child: Text(
-                                size,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: _selectedSize == size
-                                      ? Colors.white
-                                      : Colors.black,
-                                ),
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ],
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
 
-                /// **Available Colors**
+                const SizedBox(width: 12), // **Spacing between cards**
+
+                /// **Available Colors (Inside a Uniform Card)**
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Available Colors",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 10),
-                      Wrap(
-                        spacing: 10,
-                        children: widget.item['colors'].map<Widget>((color) {
-                          return GestureDetector(
-                            onTap: () => _selectColor(color),
-                            child: CircleAvatar(
-                              radius: 18,
-                              backgroundColor: _selectedColor == color
-                                  ? Colors.black
-                                  : Colors.grey[300],
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.15),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Available Colors",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 12),
+                        Wrap(
+                          spacing: 10,
+                          children: widget.item['colors'].map<Widget>((color) {
+                            return GestureDetector(
+                              onTap: () => _selectColor(color),
                               child: CircleAvatar(
-                                radius: 14,
-                                backgroundColor: color == "Red"
-                                    ? Color.fromARGB(255, 212, 111, 104)
-                                    : color == "Blue"
-                                        ? Color.fromARGB(255, 102, 140, 174)
-                                        : color == "Green"
-                                            ? const Color.fromARGB(
-                                                255, 56, 114, 58)
-                                            : color == "Pink"
-                                                ? Color.fromARGB(
-                                                    255, 250, 159, 233)
-                                                : color == "Purple"
-                                                    ? Color.fromARGB(
-                                                        255, 173, 119, 221)
-                                                    : color == "yellow"
-                                                        ? Color.fromARGB(
-                                                            255, 216, 184, 98)
-                                                        : color == "brown"
-                                                            ? Color.fromARGB(
-                                                                255, 90, 75, 33)
-                                                            : Color.fromARGB(
-                                                                255,
-                                                                209,
-                                                                181,
-                                                                138),
+                                radius:
+                                    20, // **Same size for all color bubbles**
+                                backgroundColor: _selectedColor == color
+                                    ? Colors.black
+                                    : Colors.grey[300],
+                                child: CircleAvatar(
+                                  radius: 16,
+                                  backgroundColor: _getColorFromName(color),
+                                ),
                               ),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ],
+                            );
+                          }).toList(),
+                        ),
+                        // const SizedBox(height: 12),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -729,5 +868,27 @@ class _ClothingDetailsPageState extends State<ClothingDetailsPage> {
         ],
       ),
     );
+  }
+}
+
+/// **Function to Convert Color Name to Color Code**
+Color _getColorFromName(String colorName) {
+  switch (colorName.toLowerCase()) {
+    case "red":
+      return const Color.fromARGB(255, 212, 111, 104);
+    case "blue":
+      return const Color.fromARGB(255, 102, 140, 174);
+    case "green":
+      return const Color.fromARGB(255, 56, 114, 58);
+    case "pink":
+      return const Color.fromARGB(255, 250, 159, 233);
+    case "purple":
+      return const Color.fromARGB(255, 173, 119, 221);
+    case "yellow":
+      return const Color.fromARGB(255, 216, 184, 98);
+    case "brown":
+      return const Color.fromARGB(255, 90, 75, 33);
+    default:
+      return const Color.fromARGB(255, 209, 181, 138); // Default beige
   }
 }
