@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tinyfits_app/theme/colors.dart';
+import 'package:tinyfits_app/screens/growth_chart_page.dart';
 
 class PastMeasurementsPage extends StatefulWidget {
   final List<Map<String, dynamic>> pastMeasurements;
@@ -299,8 +300,35 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
                 }).toList(),
               ),
             ],
+
+            /// **View Growth Chart Button**
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+              onPressed: _navigateToGrowthChart,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.themeGreen,
+                minimumSize: const Size(double.infinity, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              icon: const Icon(Icons.bar_chart, color: Colors.white),
+              label: const Text(
+                "View Growth Chart",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _navigateToGrowthChart() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => GrowthChartPage(pastMeasurements: pastRecords),
       ),
     );
   }

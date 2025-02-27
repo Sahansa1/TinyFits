@@ -1007,7 +1007,7 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
       return Container(
         margin: const EdgeInsets.all(8),
         decoration: const BoxDecoration(
-          color: AppColors.themeBlue,
+          color: AppColors.themeGreen,
           shape: BoxShape.circle,
         ),
         child: IconButton(
