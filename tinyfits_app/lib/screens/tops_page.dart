@@ -84,7 +84,7 @@ class TopsPage extends StatelessWidget {
             'Sleeveless open-knit top with a round neckline and scalloped trim.',
         'material': 'Delicate knit—hand wash recommended.',
         'images': ['assets/tops/openwork_knit_top.jpg'],
-        'colors': [],
+        'colors': ['Blue'],
         'sizes': ['S', 'M', 'L'],
       },
       {
@@ -105,7 +105,7 @@ class TopsPage extends StatelessWidget {
             'Cozy knit cardigan with a soft texture and a relaxed fit.',
         'material': 'Warm and breathable—machine washable.',
         'images': ['assets/tops/knitcardigan.jpg'],
-        'colors': [],
+        'colors': ['Pink'],
         'sizes': ['S', 'M', 'L'],
       },
       {

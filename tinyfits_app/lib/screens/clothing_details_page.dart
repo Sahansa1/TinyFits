@@ -306,6 +306,7 @@ import 'package:tinyfits_app/screens/custom_drawer.dart';
 import 'package:tinyfits_app/screens/clothing_page.dart';
 import 'package:tinyfits_app/screens/add_details_page.dart';
 import 'package:tinyfits_app/screens/profile_page.dart';
+import 'package:tinyfits_app/screens/home_page.dart';
 
 class ClothingDetailsPage extends StatefulWidget {
   final Map<String, dynamic> item;
@@ -489,17 +490,87 @@ class _ClothingDetailsPageState extends State<ClothingDetailsPage> {
             const SizedBox(height: 16),
 
             /// **Product Name (Centered)**
-            Center(
-              child: Text(
-                widget.item['name'],
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
+            // Center(
+            //   child: Text(
+            //     widget.item['name'],
+            //     style: const TextStyle(
+            //       fontSize: 22,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            // ),
+
+            const SizedBox(height: 12),
+            // const SizedBox(height: 16),
+
+            /// **Product Details**
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.15),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// **Product Name**
+                  /// **Product Name (Centered)**
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        widget.item['name'],
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      // GestureDetector(
+                      //   onTap: _toggleFavorite,
+                      //   child: Icon(
+                      //     _isFavorite ? Icons.favorite : Icons.favorite_border,
+                      //     color: _isFavorite ? Colors.red : Colors.black,
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+
+                  /// **Description**
+                  const Text(
+                    "Description",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    widget.item['description'],
+                    style: const TextStyle(fontSize: 14, color: Colors.black87),
+                  ),
+                  const Divider(height: 20, thickness: 1),
+
+                  /// **Material & Care**
+                  const Text(
+                    "Material & Care",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    widget.item['material'],
+                    style: const TextStyle(fontSize: 14, color: Colors.black87),
+                  ),
+                ],
               ),
             ),
 
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
 
             /// **Size & Colors Selection (Side by Side)**
             Row(
@@ -510,7 +581,7 @@ class _ClothingDetailsPageState extends State<ClothingDetailsPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Select Size",
+                        "Available Sizes",
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
@@ -578,12 +649,29 @@ class _ClothingDetailsPageState extends State<ClothingDetailsPage> {
                               child: CircleAvatar(
                                 radius: 14,
                                 backgroundColor: color == "Red"
-                                    ? Colors.red
+                                    ? Color.fromARGB(255, 212, 111, 104)
                                     : color == "Blue"
-                                        ? Colors.blue
+                                        ? Color.fromARGB(255, 102, 140, 174)
                                         : color == "Green"
-                                            ? Colors.green
-                                            : Colors.orange,
+                                            ? const Color.fromARGB(
+                                                255, 56, 114, 58)
+                                            : color == "Pink"
+                                                ? Color.fromARGB(
+                                                    255, 250, 159, 233)
+                                                : color == "Purple"
+                                                    ? Color.fromARGB(
+                                                        255, 173, 119, 221)
+                                                    : color == "yellow"
+                                                        ? Color.fromARGB(
+                                                            255, 216, 184, 98)
+                                                        : color == "brown"
+                                                            ? Color.fromARGB(
+                                                                255, 90, 75, 33)
+                                                            : Color.fromARGB(
+                                                                255,
+                                                                209,
+                                                                181,
+                                                                138),
                               ),
                             ),
                           );
@@ -596,6 +684,49 @@ class _ClothingDetailsPageState extends State<ClothingDetailsPage> {
             ),
           ],
         ),
+      ),
+
+      /// **Bottom Navigation Bar**
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0, // This should dynamically change if needed
+        selectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const ClothingPage()),
+              );
+              break;
+            case 1:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const AddDetailsPage()),
+              );
+              break;
+            case 2:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+              );
+              break;
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.checkroom),
+            label: 'Clothing',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: 'Add',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }

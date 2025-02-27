@@ -115,8 +115,8 @@ class ClothingPage extends StatelessWidget {
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
-        selectedItemColor: AppColors.themeBlue,
-        unselectedItemColor: AppColors.themeBlue,
+        selectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(

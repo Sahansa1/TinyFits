@@ -18,7 +18,22 @@ class PantsPage extends StatelessWidget {
           "assets/pants/denim_legging_sky.jpg",
           "assets/pants/denim_legging_black.jpg"
         ],
-        "colors": ["Blue", "Sky", "Black"],
+        "colors": ["Blue", "Blue", "Black"],
+        "sizes": ["S", "M", "L"]
+      },
+      {
+        "name": "Printed Leggings",
+        "description":
+            "Stretchy leggings with unique printed designs and an elastic waistband.",
+        "material": "Soft, breathable fabric—machine washable.",
+        "images": [
+          "assets/pants/printed_leggings_2.jpg",
+          "assets/pants/printed_leggings_1.jpg",
+          "assets/pants/printed_leggings_3.jpg",
+          "assets/pants/printed_leggings_4.jpg",
+          "assets/pants/printed_leggings_5.jpg"
+        ],
+        "colors": ["Various Prints"],
         "sizes": ["S", "M", "L"]
       },
       {
@@ -58,21 +73,6 @@ class PantsPage extends StatelessWidget {
         "sizes": ["S", "M", "L"]
       },
       {
-        "name": "Printed Leggings",
-        "description":
-            "Stretchy leggings with unique printed designs and an elastic waistband.",
-        "material": "Soft, breathable fabric—machine washable.",
-        "images": [
-          "assets/pants/printed_leggings_1.jpg",
-          "assets/pants/printed_leggings_2.jpg",
-          "assets/pants/printed_leggings_3.jpg",
-          "assets/pants/printed_leggings_4.jpg",
-          "assets/pants/printed_leggings_5.jpg"
-        ],
-        "colors": ["Various Prints"],
-        "sizes": ["S", "M", "L"]
-      },
-      {
         "name": "Ribbed Leggings",
         "description":
             "100% cashmere ribbed leggings with an elastic waistband.",
@@ -81,7 +81,7 @@ class PantsPage extends StatelessWidget {
           "assets/pants/ribbed_legging_pink.jpg",
           "assets/pants/ribbed_legging_sand.jpg"
         ],
-        "colors": ["Pink", "Sand"],
+        "colors": ["Pink", "Brown"],
         "sizes": ["S", "M", "L"]
       },
       {
