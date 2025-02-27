@@ -1,4 +1,6 @@
 // import 'package:flutter/material.dart';
+// import 'package:tinyfits_app/theme/colors.dart';
+// import 'package:tinyfits_app/screens/custom_drawer.dart';
 
 // class ClothingDetailsPage extends StatefulWidget {
 //   final Map<String, dynamic> item;
@@ -10,50 +12,21 @@
 // }
 
 // class _ClothingDetailsPageState extends State<ClothingDetailsPage> {
-//   int _currentImageIndex = 0;
-//   String _selectedColor = '';
+//   bool _isFavorite = false;
 //   String _selectedSize = '';
+//   int _currentImageIndex = 0;
+//   final PageController _pageController = PageController();
 
 //   @override
 //   void initState() {
 //     super.initState();
-//     _selectedColor = widget.item['colors'].isNotEmpty
-//         ? widget.item['colors'][0]['name']
-//         : '';
 //     _selectedSize =
-//         widget.item['sizes'].isNotEmpty ? widget.item['sizes'][0]['size'] : '';
+//         widget.item['sizes'].isNotEmpty ? widget.item['sizes'][0] : '';
 //   }
 
-//   void _changeColor(String color) {
+//   void _toggleFavorite() {
 //     setState(() {
-//       _selectedColor = color;
-//       _currentImageIndex = 0; // Reset image when color is changed
-//     });
-//   }
-
-//   void _changeImage(bool next) {
-//     setState(() {
-//       final colorData = widget.item['colors'].firstWhere(
-//         (c) => c['name'] == _selectedColor,
-//         orElse: () =>
-//             widget.item['colors'].isNotEmpty ? widget.item['colors'][0] : null,
-//       );
-
-//       if (colorData == null || colorData['images'] == null) {
-//         _currentImageIndex = 0; // Fallback to prevent crashing
-//         return;
-//       }
-
-//       int imageCount = (colorData['images'] as List).length;
-
-//       if (next) {
-//         _currentImageIndex = ((_currentImageIndex + 1) % imageCount).toInt();
-//       } else {
-//         _currentImageIndex = ((_currentImageIndex - 1) < 0
-//                 ? imageCount - 1
-//                 : _currentImageIndex - 1)
-//             .toInt();
-//       }
+//       _isFavorite = !_isFavorite;
 //     });
 //   }
 
@@ -63,175 +36,262 @@
 //     });
 //   }
 
-//   bool _isFavorite = false;
-
-//   void _toggleFavorite() {
-//     setState(() {
-//       _isFavorite = !_isFavorite;
-//     });
-//   }
-
 //   @override
 //   Widget build(BuildContext context) {
-//     final colorData =
-//         widget.item['colors'].firstWhere((c) => c['name'] == _selectedColor);
-//     final List<String> images = colorData['images'];
+//     List<String> images = widget.item['images'] ?? [widget.item['image']];
 
 //     return Scaffold(
+//       backgroundColor: Colors.white,
+
+//       /// **App Bar with Logo & Menu**
 //       appBar: AppBar(
-//         title: Text(widget.item['name']),
+//         centerTitle: true,
+//         title: Image.asset(
+//           'assets/logo3.png',
+//           height: 40,
+//         ),
 //         backgroundColor: Colors.white,
-//         foregroundColor: Colors.black,
-//         elevation: 0,
+//         elevation: 2,
 //         actions: [
-//           IconButton(
-//             icon: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border,
-//                 color: Colors.red),
-//             onPressed: _toggleFavorite,
+//           Builder(
+//             builder: (context) => IconButton(
+//               icon: const Icon(Icons.menu),
+//               onPressed: () => Scaffold.of(context).openEndDrawer(),
+//             ),
 //           ),
 //         ],
 //       ),
+//       endDrawer: const CustomDrawer(
+//         userName: "John Doe",
+//         userEmail: "johndoe@email.com",
+//       ),
+
 //       body: SingleChildScrollView(
-//         padding: const EdgeInsets.all(16),
+//         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
 //         child: Column(
 //           crossAxisAlignment: CrossAxisAlignment.start,
 //           children: [
-//             /// **Image Carousel**
-//             Stack(
-//               alignment: Alignment.center,
-//               children: [
-//                 Center(
-//                   child: Image.asset(
-//                     images[_currentImageIndex],
-//                     width: 200,
-//                     height: 200,
-//                     fit: BoxFit.contain,
-//                   ),
+//             /// **Image Carousel with Proper Sizing**
+//             ClipRRect(
+//               borderRadius: BorderRadius.circular(12),
+//               child: Container(
+//                 decoration: BoxDecoration(
+//                   color: Colors.grey[200], // Light Background for Contrast
+//                   borderRadius: BorderRadius.circular(12),
 //                 ),
-//                 Positioned(
-//                   left: 10,
-//                   child: IconButton(
-//                     icon: const Icon(Icons.arrow_back_ios, size: 20),
-//                     onPressed: () => _changeImage(false),
-//                   ),
-//                 ),
-//                 Positioned(
-//                   right: 10,
-//                   child: IconButton(
-//                     icon: const Icon(Icons.arrow_forward_ios, size: 20),
-//                     onPressed: () => _changeImage(true),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//             const SizedBox(height: 16),
-
-//             /// **Clothing Name**
-//             Text(
-//               widget.item['name'],
-//               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-//             ),
-//             const SizedBox(height: 8),
-
-//             /// **Color Selection**
-//             Text(
-//               "Colors",
-//               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//             ),
-//             const SizedBox(height: 8),
-//             Row(
-//               children: widget.item['colors'].map<Widget>((color) {
-//                 return GestureDetector(
-//                   onTap: () => _changeColor(color['name']),
-//                   child: Container(
-//                     margin: const EdgeInsets.only(right: 8),
-//                     padding: const EdgeInsets.all(6),
-//                     decoration: BoxDecoration(
-//                       color: color['hex'],
-//                       shape: BoxShape.circle,
-//                       border: Border.all(
-//                         color: _selectedColor == color['name']
-//                             ? Colors.black
-//                             : Colors.grey,
-//                         width: _selectedColor == color['name'] ? 2 : 1,
+//                 child: Stack(
+//                   children: [
+//                     SizedBox(
+//                       height: 280, // Properly sized image
+//                       width: double.infinity,
+//                       child: PageView.builder(
+//                         controller: _pageController,
+//                         itemCount: images.length,
+//                         onPageChanged: (index) {
+//                           setState(() {
+//                             _currentImageIndex = index;
+//                           });
+//                         },
+//                         itemBuilder: (context, index) {
+//                           return Image.asset(
+//                             images[index],
+//                             fit: BoxFit.cover,
+//                           );
+//                         },
 //                       ),
 //                     ),
-//                     width: 30,
-//                     height: 30,
-//                   ),
-//                 );
-//               }).toList(),
-//             ),
-//             const SizedBox(height: 12),
 
-//             /// **Description**
-//             Text("Description",
-//                 style:
-//                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-//             const SizedBox(height: 4),
-//             Text(widget.item['description'],
-//                 style: const TextStyle(fontSize: 14, color: Colors.black87)),
-//             const SizedBox(height: 12),
-
-//             /// **Material & Care**
-//             Text("Material & Care",
-//                 style:
-//                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-//             const SizedBox(height: 4),
-//             Text(widget.item['material'],
-//                 style: const TextStyle(fontSize: 14, color: Colors.black87)),
-//             const SizedBox(height: 12),
-
-//             /// **Manual Size Selection**
-//             Text("Manual Size Selection",
-//                 style:
-//                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-//             const SizedBox(height: 8),
-//             Column(
-//               children: widget.item['sizes'].map<Widget>((sizeData) {
-//                 return GestureDetector(
-//                   onTap: () => _selectSize(sizeData['size']),
-//                   child: Container(
-//                     margin: const EdgeInsets.symmetric(vertical: 5),
-//                     padding: const EdgeInsets.symmetric(
-//                         horizontal: 12, vertical: 10),
-//                     decoration: BoxDecoration(
-//                       color: _selectedSize == sizeData['size']
-//                           ? Colors.blue[100]
-//                           : Colors.white,
-//                       borderRadius: BorderRadius.circular(8),
-//                       border: Border.all(color: Colors.grey),
+//                     /// **Left Arrow**
+//                     Positioned(
+//                       left: 10,
+//                       top: 130,
+//                       child: IconButton(
+//                         icon: const Icon(Icons.arrow_back_ios,
+//                             color: Colors.black54),
+//                         onPressed: () {
+//                           if (_currentImageIndex > 0) {
+//                             _pageController.previousPage(
+//                               duration: const Duration(milliseconds: 300),
+//                               curve: Curves.easeInOut,
+//                             );
+//                           }
+//                         },
+//                       ),
 //                     ),
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: [
-//                         Row(
-//                           children: [
-//                             Icon(
-//                               _selectedSize == sizeData['size']
-//                                   ? Icons.radio_button_checked
-//                                   : Icons.radio_button_off,
-//                               color: _selectedSize == sizeData['size']
-//                                   ? Colors.blue
+
+//                     /// **Right Arrow**
+//                     Positioned(
+//                       right: 10,
+//                       top: 130,
+//                       child: IconButton(
+//                         icon: const Icon(Icons.arrow_forward_ios,
+//                             color: Colors.black54),
+//                         onPressed: () {
+//                           if (_currentImageIndex < images.length - 1) {
+//                             _pageController.nextPage(
+//                               duration: const Duration(milliseconds: 300),
+//                               curve: Curves.easeInOut,
+//                             );
+//                           }
+//                         },
+//                       ),
+//                     ),
+
+//                     /// **Dots Indicator (Centered)**
+//                     Positioned(
+//                       bottom: 10,
+//                       left: 0,
+//                       right: 0,
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.center,
+//                         children: List.generate(images.length, (index) {
+//                           return Container(
+//                             margin: const EdgeInsets.symmetric(horizontal: 4),
+//                             width: _currentImageIndex == index ? 8 : 6,
+//                             height: _currentImageIndex == index ? 8 : 6,
+//                             decoration: BoxDecoration(
+//                               shape: BoxShape.circle,
+//                               color: _currentImageIndex == index
+//                                   ? AppColors.themeBlue
 //                                   : Colors.grey,
 //                             ),
-//                             const SizedBox(width: 8),
-//                             Text(
-//                               sizeData['size'],
-//                               style: const TextStyle(
-//                                   fontSize: 16, fontWeight: FontWeight.bold),
-//                             ),
-//                           ],
-//                         ),
-//                         Text(
-//                           sizeData['age'],
-//                           style: const TextStyle(color: Colors.black54),
-//                         ),
-//                       ],
+//                           );
+//                         }),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+
+//             const SizedBox(height: 16),
+
+//             /// **Product Details**
+//             Container(
+//               padding: const EdgeInsets.all(16),
+//               decoration: BoxDecoration(
+//                 color: Colors.white,
+//                 borderRadius: BorderRadius.circular(12),
+//                 boxShadow: [
+//                   BoxShadow(
+//                     color: Colors.grey.withOpacity(0.15),
+//                     blurRadius: 8,
+//                     offset: const Offset(0, 4),
+//                   ),
+//                 ],
+//               ),
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   /// **Product Name**
+//                   /// **Product Name (Centered)**
+//                   Center(
+//                     child: Text(
+//                       widget.item['name'],
+//                       style: const TextStyle(
+//                         fontSize: 22,
+//                         fontWeight: FontWeight.bold,
+//                       ),
 //                     ),
 //                   ),
-//                 );
-//               }).toList(),
+//                   const SizedBox(height: 12),
+
+//                   /// **Description**
+//                   const Text(
+//                     "Description",
+//                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+//                   ),
+//                   const SizedBox(height: 4),
+//                   Text(
+//                     widget.item['description'],
+//                     style: const TextStyle(fontSize: 14, color: Colors.black87),
+//                   ),
+//                   const Divider(height: 20, thickness: 1),
+
+//                   /// **Material & Care**
+//                   const Text(
+//                     "Material & Care",
+//                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+//                   ),
+//                   const SizedBox(height: 4),
+//                   Text(
+//                     widget.item['material'],
+//                     style: const TextStyle(fontSize: 14, color: Colors.black87),
+//                   ),
+//                 ],
+//               ),
+//             ),
+
+//             const SizedBox(height: 16),
+
+//             /// **Manual Size Selection**
+//             Container(
+//               padding: const EdgeInsets.all(16),
+//               decoration: BoxDecoration(
+//                 color: AppColors.themeOrange.withOpacity(0.2),
+//                 borderRadius: BorderRadius.circular(12),
+//               ),
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   const Text(
+//                     "Select Size",
+//                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+//                   ),
+//                   const SizedBox(height: 10),
+
+//                   /// **Size Options**
+//                   Wrap(
+//                     spacing: 12,
+//                     runSpacing: 8,
+//                     children: widget.item['sizes'].map<Widget>((size) {
+//                       return GestureDetector(
+//                         onTap: () => _selectSize(size),
+//                         child: AnimatedContainer(
+//                           duration: const Duration(milliseconds: 300),
+//                           padding: const EdgeInsets.symmetric(
+//                               horizontal: 16, vertical: 10),
+//                           decoration: BoxDecoration(
+//                             color: _selectedSize == size
+//                                 ? AppColors.themeBlue
+//                                 : Colors.white,
+//                             borderRadius: BorderRadius.circular(8),
+//                             border: Border.all(
+//                               color: _selectedSize == size
+//                                   ? AppColors.themeBlue
+//                                   : Colors.grey,
+//                               width: 1.5,
+//                             ),
+//                           ),
+//                           child: Text(
+//                             size,
+//                             style: TextStyle(
+//                               fontSize: 16,
+//                               fontWeight: FontWeight.bold,
+//                               color: _selectedSize == size
+//                                   ? Colors.white
+//                                   : Colors.black,
+//                             ),
+//                           ),
+//                         ),
+//                       );
+//                     }).toList(),
+//                   ),
+
+//                   const SizedBox(height: 16),
+
+//                   /// **Available Colors**
+//                   const Text(
+//                     "Available Colors",
+//                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+//                   ),
+//                   const SizedBox(height: 8),
+//                   Text(
+//                     widget.item['colors'].join(', '),
+//                     style: const TextStyle(fontSize: 14),
+//                   ),
+//                 ],
+//               ),
 //             ),
 //           ],
 //         ),
@@ -239,7 +299,13 @@
 //     );
 //   }
 // }
+
 import 'package:flutter/material.dart';
+import 'package:tinyfits_app/theme/colors.dart';
+import 'package:tinyfits_app/screens/custom_drawer.dart';
+import 'package:tinyfits_app/screens/clothing_page.dart';
+import 'package:tinyfits_app/screens/add_details_page.dart';
+import 'package:tinyfits_app/screens/profile_page.dart';
 
 class ClothingDetailsPage extends StatefulWidget {
   final Map<String, dynamic> item;
@@ -253,12 +319,17 @@ class ClothingDetailsPage extends StatefulWidget {
 class _ClothingDetailsPageState extends State<ClothingDetailsPage> {
   bool _isFavorite = false;
   String _selectedSize = '';
+  String _selectedColor = '';
+  int _currentImageIndex = 0;
+  final PageController _pageController = PageController();
 
   @override
   void initState() {
     super.initState();
     _selectedSize =
         widget.item['sizes'].isNotEmpty ? widget.item['sizes'][0] : '';
+    _selectedColor =
+        widget.item['colors'].isNotEmpty ? widget.item['colors'][0] : '';
   }
 
   void _toggleFavorite() {
@@ -273,15 +344,28 @@ class _ClothingDetailsPageState extends State<ClothingDetailsPage> {
     });
   }
 
+  void _selectColor(String color) {
+    setState(() {
+      _selectedColor = color;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<String> images = widget.item['images'] ?? [widget.item['image']];
+
     return Scaffold(
+      backgroundColor: Colors.white,
+
+      /// **App Bar with Logo & Favorite Button**
       appBar: AppBar(
-        title: Text(widget.item['name']),
+        centerTitle: true,
+        title: Image.asset(
+          'assets/logo3.png',
+          height: 40,
+        ),
         backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 3,
-        shadowColor: Colors.black26,
+        elevation: 2,
         actions: [
           IconButton(
             icon: Icon(
@@ -290,105 +374,225 @@ class _ClothingDetailsPageState extends State<ClothingDetailsPage> {
             ),
             onPressed: _toggleFavorite,
           ),
+          Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () => Scaffold.of(context).openEndDrawer(),
+            ),
+          ),
         ],
       ),
+      endDrawer: const CustomDrawer(
+        userName: "John Doe",
+        userEmail: "johndoe@email.com",
+      ),
+
+      /// **Body Content**
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// **Image Section**
-            Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  widget.item['image'],
-                  width: 250,
-                  height: 250,
-                  fit: BoxFit.cover,
+            /// **Image Carousel**
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Stack(
+                  children: [
+                    SizedBox(
+                      height: 280,
+                      width: double.infinity,
+                      child: PageView.builder(
+                        controller: _pageController,
+                        itemCount: images.length,
+                        onPageChanged: (index) {
+                          setState(() {
+                            _currentImageIndex = index;
+                          });
+                        },
+                        itemBuilder: (context, index) {
+                          return Image.asset(
+                            images[index],
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      ),
+                    ),
+
+                    /// **Left Arrow**
+                    Positioned(
+                      left: 10,
+                      top: 130,
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_back_ios,
+                            color: Colors.black54),
+                        onPressed: () {
+                          if (_currentImageIndex > 0) {
+                            _pageController.previousPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
+                          }
+                        },
+                      ),
+                    ),
+
+                    /// **Right Arrow**
+                    Positioned(
+                      right: 10,
+                      top: 130,
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_forward_ios,
+                            color: Colors.black54),
+                        onPressed: () {
+                          if (_currentImageIndex < images.length - 1) {
+                            _pageController.nextPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
+                          }
+                        },
+                      ),
+                    ),
+
+                    /// **Dots Indicator**
+                    Positioned(
+                      bottom: 10,
+                      left: 0,
+                      right: 0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(images.length, (index) {
+                          return Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            width: _currentImageIndex == index ? 8 : 6,
+                            height: _currentImageIndex == index ? 8 : 6,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: _currentImageIndex == index
+                                  ? AppColors.themeBlue
+                                  : Colors.grey,
+                            ),
+                          );
+                        }),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
+
             const SizedBox(height: 16),
 
-            /// **Clothing Name**
-            Text(
-              widget.item['name'],
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            /// **Product Name (Centered)**
+            Center(
+              child: Text(
+                widget.item['name'],
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
+
             const SizedBox(height: 12),
 
-            /// **Description**
-            Text(
-              "Description",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              widget.item['description'],
-              style: const TextStyle(fontSize: 14, color: Colors.black87),
-            ),
-            const SizedBox(height: 12),
-
-            /// **Material & Care**
-            Text(
-              "Material & Care",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              widget.item['material'],
-              style: const TextStyle(fontSize: 14, color: Colors.black87),
-            ),
-            const SizedBox(height: 16),
-
-            /// **Manual Size Selection**
-            Text(
-              "Manual Size Selection",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Column(
-              children: widget.item['sizes'].map<Widget>((size) {
-                return GestureDetector(
-                  onTap: () => _selectSize(size),
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: _selectedSize == size
-                          ? Colors.blue[100]
-                          : Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              _selectedSize == size
-                                  ? Icons.radio_button_checked
-                                  : Icons.radio_button_off,
-                              color: _selectedSize == size
-                                  ? Colors.blue
-                                  : Colors.grey,
+            /// **Size & Colors Selection (Side by Side)**
+            Row(
+              children: [
+                /// **Size Selection**
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Select Size",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      Wrap(
+                        spacing: 8,
+                        children: widget.item['sizes'].map<Widget>((size) {
+                          return GestureDetector(
+                            onTap: () => _selectSize(size),
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 300),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: _selectedSize == size
+                                    ? AppColors.themeBlue
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: _selectedSize == size
+                                      ? AppColors.themeBlue
+                                      : Colors.grey,
+                                  width: 1.5,
+                                ),
+                              ),
+                              child: Text(
+                                size,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: _selectedSize == size
+                                      ? Colors.white
+                                      : Colors.black,
+                                ),
+                              ),
                             ),
-                            const SizedBox(width: 8),
-                            Text(
-                              size,
-                              style: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
                   ),
-                );
-              }).toList(),
+                ),
+
+                /// **Available Colors**
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Available Colors",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      Wrap(
+                        spacing: 10,
+                        children: widget.item['colors'].map<Widget>((color) {
+                          return GestureDetector(
+                            onTap: () => _selectColor(color),
+                            child: CircleAvatar(
+                              radius: 18,
+                              backgroundColor: _selectedColor == color
+                                  ? Colors.black
+                                  : Colors.grey[300],
+                              child: CircleAvatar(
+                                radius: 14,
+                                backgroundColor: color == "Red"
+                                    ? Colors.red
+                                    : color == "Blue"
+                                        ? Colors.blue
+                                        : color == "Green"
+                                            ? Colors.green
+                                            : Colors.orange,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ],
         ),

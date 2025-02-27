@@ -13,7 +13,10 @@ class TopsPage extends StatelessWidget {
         'description':
             'Classic sleeveless tee with a relaxed fit for warm-weather comfort.',
         'material': 'Breathable fabric—machine washable.',
-        'image': 'assets/tops/sleeveless_tee_yellow.jpg',
+        'images': [
+          'assets/tops/sleeveless_tee_yellow.jpg',
+          'assets/tops/sleeveless_tee_blue.jpg'
+        ],
         'colors': ['Yellow', 'Blue'],
         'sizes': ['S', 'M', 'L'],
       },
@@ -22,7 +25,11 @@ class TopsPage extends StatelessWidget {
         'description':
             'Simple short-sleeve tee with a round neckline for everyday wear.',
         'material': 'Lightweight and breathable—machine washable.',
-        'image': 'assets/tops/plain_tee_purple.jpg',
+        'images': [
+          'assets/tops/plain_tee_purple.jpg',
+          'assets/tops/plain_tee_pink.jpg',
+          'assets/tops/plain_tee_white.jpg'
+        ],
         'colors': ['Purple', 'Pink', 'White'],
         'sizes': ['S', 'M', 'L'],
       },
@@ -31,17 +38,20 @@ class TopsPage extends StatelessWidget {
         'description':
             'Stylish printed tee with a comfortable fit and a round neckline.',
         'material': 'Soft cotton fabric—easy care.',
-        'image': 'assets/tops/printed_tee.jpg',
+        'images': ['assets/tops/printed_tee.jpg'],
         'colors': ['Various prints available'],
         'sizes': ['S', 'M', 'L'],
       },
       {
-        'name': 'Knit Cardigan',
+        'name': 'Striped Knit Sweatshirt',
         'description':
-            'Cozy knit cardigan with a soft texture and a relaxed fit.',
-        'material': 'Warm and breathable—machine washable.',
-        'image': 'assets/tops/knitcardigan.jpg',
-        'colors': [],
+            'Knit sweater with a round neckline, long sleeves, and a tubular hem. Features a multicolor striped print.',
+        'material': 'Cozy knit—gentle wash recommended.',
+        'images': [
+          'assets/tops/striped_knit_sweatshirt_pink.jpg',
+          'assets/tops/striped_knit_sweatshirt_brown.jpg'
+        ],
+        'colors': ['Pink', 'Brown'],
         'sizes': ['S', 'M', 'L'],
       },
       {
@@ -49,7 +59,11 @@ class TopsPage extends StatelessWidget {
         'description':
             'Classic long-sleeve tee with a round neckline for a versatile look.',
         'material': 'Soft, stretchy fabric—easy care.',
-        'image': 'assets/tops/longsleeve_tround_neck_tee_pink.jpg',
+        'images': [
+          'assets/tops/longsleeve_tround_neck_tee_pink.jpg',
+          'assets/tops/longsleeve_tround_neck_tee_black.jpg',
+          'assets/tops/longsleeve_tround_neck_tee_white.jpg'
+        ],
         'colors': ['White', 'Black', 'Pink'],
         'sizes': ['S', 'M', 'L'],
       },
@@ -57,7 +71,10 @@ class TopsPage extends StatelessWidget {
         'name': 'Long-Sleeve Striped Tee',
         'description': 'Timeless striped long-sleeve tee with a relaxed fit.',
         'material': 'Lightweight and breathable—machine washable.',
-        'image': 'assets/tops/lsleeve_striped_blue.jpg',
+        'images': [
+          'assets/tops/lsleeve_striped_blue.jpg',
+          'assets/tops/lsleeve_striped_brown.jpg'
+        ],
         'colors': ['Blue', 'Brown'],
         'sizes': ['S', 'M', 'L'],
       },
@@ -66,7 +83,7 @@ class TopsPage extends StatelessWidget {
         'description':
             'Sleeveless open-knit top with a round neckline and scalloped trim.',
         'material': 'Delicate knit—hand wash recommended.',
-        'image': 'assets/tops/openwork_knit_top.jpg',
+        'images': ['assets/tops/openwork_knit_top.jpg'],
         'colors': [],
         'sizes': ['S', 'M', 'L'],
       },
@@ -75,17 +92,20 @@ class TopsPage extends StatelessWidget {
         'description':
             'Striped T-shirt with a round neckline, short sleeves, and a front terry patch detail.',
         'material': 'Soft cotton blend—easy care.',
-        'image': 'assets/tops/patch_striped_tee_red.jpg',
+        'images': [
+          'assets/tops/patch_striped_tee_red.jpg',
+          'assets/tops/patch_striped_tee_blue.jpg'
+        ],
         'colors': ['Blue', 'Red'],
         'sizes': ['S', 'M', 'L'],
       },
       {
-        'name': 'Striped Knit Sweatshirt',
+        'name': 'Knit Cardigan',
         'description':
-            'Knit sweater with a round neckline, long sleeves, and a tubular hem. Features a multicolor striped print.',
-        'material': 'Cozy knit—gentle wash recommended.',
-        'image': 'assets/tops/striped_knit_sweatshirt_pink.jpg',
-        'colors': ['Pink', 'Brown'],
+            'Cozy knit cardigan with a soft texture and a relaxed fit.',
+        'material': 'Warm and breathable—machine washable.',
+        'images': ['assets/tops/knitcardigan.jpg'],
+        'colors': [],
         'sizes': ['S', 'M', 'L'],
       },
       {
@@ -93,7 +113,10 @@ class TopsPage extends StatelessWidget {
         'description':
             'Warm thermal shirt designed for insulation and comfort.',
         'material': 'Heat-retaining fabric—machine washable.',
-        'image': 'assets/tops/thermal_shirt_green.jpg',
+        'images': [
+          'assets/tops/thermal_shirt_green.jpg',
+          'assets/tops/thermal_shirt_orange.jpg'
+        ],
         'colors': ['Green', 'Orange'],
         'sizes': ['S', 'M', 'L'],
       },
@@ -286,7 +309,7 @@ class TopsPage extends StatelessWidget {
                                   borderRadius: const BorderRadius.vertical(
                                       top: Radius.circular(12)),
                                   child: Image.asset(
-                                    item['image'],
+                                    item['images'][0],
                                     width: double.infinity,
                                     fit: BoxFit.cover,
                                   ),
