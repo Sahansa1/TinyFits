@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tinyfits_app/models/child_card.dart';
 import 'package:tinyfits_app/theme/colors.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tinyfits_app/screens/past_measurements_page .dart';
+import 'package:tinyfits_app/screens/past_measurements_page.dart';
 import 'dart:io';
 
 class EditDetailsPage extends StatefulWidget {
@@ -234,13 +234,43 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
   }
 
   /// 📌 **Date Picker**
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(2000),
+  //     lastDate: DateTime.now(),
+  //   );
+  //   if (picked != null) {
+  //     setState(() {
+  //       dobController.text = "${picked.day}/${picked.month}/${picked.year}";
+  //     });
+  //   }
+  //}
+
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: AppColors.themePurple, // Header color
+            colorScheme: ColorScheme.light(
+              primary: AppColors.themePurple, // Selected date color
+              onPrimary: Colors.white, // Text color on selected date
+              onSurface: Colors.black, // Default text color
+            ),
+            dialogBackgroundColor:
+                Colors.white, // Background color of the dialog
+          ),
+          child: child!,
+        );
+      },
     );
+
     if (picked != null) {
       setState(() {
         dobController.text = "${picked.day}/${picked.month}/${picked.year}";
@@ -304,6 +334,7 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
         weight: weightController.text,
         note: noteController.text,
         imageUrl: widget.card.imageUrl,
+        pastMeasurements: [],
       );
       Navigator.pop(context, updatedCard);
     }

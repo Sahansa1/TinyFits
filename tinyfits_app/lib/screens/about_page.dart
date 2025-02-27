@@ -15,13 +15,15 @@ class AboutPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// **Title Section**
-            const Text(
-              'About TinyFits',
-              style: TextStyle(
-                fontSize: 22, // Consistent with Help & Support
-                fontWeight: FontWeight.bold,
-                color: AppColors.themeBlue,
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 16), // Adjust spacing if needed
+                child: Image.asset(
+                  'assets/logo.png',
+                  height: 80, // Set appropriate size
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
             const SizedBox(height: 8),

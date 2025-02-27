@@ -6,6 +6,7 @@ class ChildCard {
   final String weight;
   final String? note;
   final String? imageUrl;
+  final List<Map<String, dynamic>> pastMeasurements; // ✅ Ensure this exists
 
   ChildCard({
     required this.name,
@@ -15,5 +16,6 @@ class ChildCard {
     required this.weight,
     this.note,
     this.imageUrl,
+    required this.pastMeasurements, // ✅ Required parameter
   });
 }
