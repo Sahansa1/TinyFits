@@ -234,6 +234,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
           // **Header with Profile & Name Centered**
           Container(
             width: double.infinity,
+            height: 225,
             padding: const EdgeInsets.all(20),
             decoration: const BoxDecoration(
               color: AppColors.themeBlue,
@@ -241,6 +242,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
             child: Column(
               children: [
+                const SizedBox(height: 20), // Moves the profile picture down
                 GestureDetector(
                   onTap: _pickImage,
                   child: Stack(

@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
   //     appBar: AppBar(
   //       centerTitle: true,
   //       title: Image.asset(
-  //         'assets/logo.png',
+  //         'assets/logo3.png',
   //         height: 40,
   //       ),
   //       backgroundColor: Colors.white,
@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(
-          'assets/logo.png',
+          'assets/logo3.png',
           height: 40,
         ),
         backgroundColor: Colors.white,

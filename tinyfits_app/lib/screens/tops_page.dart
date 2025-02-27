@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'clothing_details_page.dart'; // Import the details page
+import 'package:tinyfits_app/screens/custom_drawer.dart';
 
 class TopsPage extends StatelessWidget {
   const TopsPage({super.key});
@@ -99,96 +100,242 @@ class TopsPage extends StatelessWidget {
     ];
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Tops'),
+        centerTitle: true,
+        title: Image.asset(
+          'assets/logo3.png',
+          height: 40,
+        ),
         backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
         elevation: 0,
+        actions: [
+          Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () => Scaffold.of(context).openEndDrawer(),
+            ),
+          ),
+        ],
       ),
+      //**************************************************************************************** */
+      endDrawer: CustomDrawer(
+        userName: "John Doe", //HARDCORDED
+        userEmail: "johndoe@email.com", // HARDCORDED
+      ),
+
+//       body: Padding(
+//         padding: const EdgeInsets.all(12.0),
+//         child: GridView.builder(
+//           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+//             crossAxisCount: 2, // 2 items per row
+//             crossAxisSpacing: 12,
+//             mainAxisSpacing: 12,
+//             childAspectRatio: 1, // Adjusted for better proportion
+//           ),
+//           itemCount: topsList.length,
+//           itemBuilder: (context, index) {
+//             final item = topsList[index];
+
+//             return GestureDetector(
+//               onTap: () {
+//                 Navigator.push(
+//                   context,
+//                   MaterialPageRoute(
+//                     builder: (context) => ClothingDetailsPage(item: item),
+//                   ),
+//                 );
+//               },
+//               child: Card(
+//                 elevation: 3,
+//                 shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(12),
+//                 ),
+//                 child: Stack(
+//                   children: [
+//                     Column(
+//                       crossAxisAlignment: CrossAxisAlignment.center,
+//                       children: [
+//                         /// **Image**
+//                         Expanded(
+//                           child: ClipRRect(
+//                             borderRadius: const BorderRadius.vertical(
+//                                 top: Radius.circular(12)),
+//                             child: Image.asset(
+//                               item['image'],
+//                               width: double.infinity,
+//                               fit: BoxFit.cover,
+//                             ),
+//                           ),
+//                         ),
+
+//                         /// **Item Name Centered**
+//                         Container(
+//                           padding: const EdgeInsets.all(8),
+//                           decoration: BoxDecoration(
+//                             color: Colors.purple[50], // Light background
+//                             borderRadius: const BorderRadius.vertical(
+//                                 bottom: Radius.circular(12)),
+//                           ),
+//                           child: Center(
+//                             child: Text(
+//                               item['name'],
+//                               style: const TextStyle(
+//                                 fontSize: 14,
+//                                 fontWeight: FontWeight.bold,
+//                               ),
+//                               textAlign: TextAlign.center,
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+
+//                     /// **Favorite Icon on Top Right**
+//                     Positioned(
+//                       top: 8,
+//                       right: 8,
+//                       child: IconButton(
+//                         icon: const Icon(Icons.favorite_border,
+//                             color: Colors.grey),
+//                         onPressed: () {
+//                           // Handle favorite action
+//                         },
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             );
+//           },
+//         ),
+//       ),
+//     );
+//   }
+// }
       body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, // 2 items per row
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-            childAspectRatio: 1, // Adjusted for better proportion
-          ),
-          itemCount: topsList.length,
-          itemBuilder: (context, index) {
-            final item = topsList[index];
-
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ClothingDetailsPage(item: item),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            /// **Header Section with "Tops" Title**
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.1),
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
                   ),
-                );
-              },
-              child: Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Stack(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        /// **Image**
-                        Expanded(
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(12)),
-                            child: Image.asset(
-                              item['image'],
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-
-                        /// **Item Name Centered**
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.purple[50], // Light background
-                            borderRadius: const BorderRadius.vertical(
-                                bottom: Radius.circular(12)),
-                          ),
-                          child: Center(
-                            child: Text(
-                              item['name'],
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    /// **Favorite Icon on Top Right**
-                    Positioned(
-                      top: 8,
-                      right: 8,
-                      child: IconButton(
-                        icon: const Icon(Icons.favorite_border,
-                            color: Colors.grey),
-                        onPressed: () {
-                          // Handle favorite action
-                        },
-                      ),
-                    ),
-                  ],
+                ],
+              ),
+              child: const Center(
+                child: Text(
+                  'Tops',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            );
-          },
+            ),
+
+            /// **Spacing Before Grid**
+            const SizedBox(height: 12),
+
+            /// **Expanded GridView**
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // 2 items per row
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 0.85, // Adjusted for better proportions
+                ),
+                itemCount: topsList.length,
+                itemBuilder: (context, index) {
+                  final item = topsList[index];
+
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ClothingDetailsPage(item: item),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Stack(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              /// **Image Section**
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.vertical(
+                                      top: Radius.circular(12)),
+                                  child: Image.asset(
+                                    item['image'],
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+
+                              /// **Item Name Centered**
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: Colors.purple[50], // Light background
+                                  borderRadius: const BorderRadius.vertical(
+                                      bottom: Radius.circular(12)),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    item['name'],
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          /// **Favorite Icon on Top Right**
+                          Positioned(
+                            top: 8,
+                            right: 8,
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.favorite_border,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                // Handle favorite action
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

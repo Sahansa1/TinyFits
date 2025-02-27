@@ -30,7 +30,7 @@ class ClothingPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(
-          'assets/logo.png',
+          'assets/logo3.png',
           height: 40,
         ),
         backgroundColor: Colors.white,
