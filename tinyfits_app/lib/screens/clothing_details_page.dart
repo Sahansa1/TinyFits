@@ -368,13 +368,13 @@ class _ClothingDetailsPageState extends State<ClothingDetailsPage> {
         backgroundColor: Colors.white,
         elevation: 2,
         actions: [
-          IconButton(
-            icon: Icon(
-              _isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: _isFavorite ? Colors.red : Colors.black,
-            ),
-            onPressed: _toggleFavorite,
-          ),
+          // IconButton(
+          //   icon: Icon(
+          //     _isFavorite ? Icons.favorite : Icons.favorite_border,
+          //     color: _isFavorite ? Colors.red : Colors.black,
+          //   ),
+          //   onPressed: _toggleFavorite,
+          // ),
           Builder(
             builder: (context) => IconButton(
               icon: const Icon(Icons.menu),
@@ -533,13 +533,14 @@ class _ClothingDetailsPageState extends State<ClothingDetailsPage> {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      // GestureDetector(
-                      //   onTap: _toggleFavorite,
-                      //   child: Icon(
-                      //     _isFavorite ? Icons.favorite : Icons.favorite_border,
-                      //     color: _isFavorite ? Colors.red : Colors.black,
-                      //   ),
-                      // ),
+                      GestureDetector(
+                        onTap: _toggleFavorite,
+                        child: Icon(
+                          _isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color:
+                              _isFavorite ? AppColors.themePink : Colors.black,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 12),
