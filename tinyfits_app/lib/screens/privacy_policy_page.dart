@@ -7,8 +7,16 @@ class PrivacyPolicyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Privacy Policy'),
+        centerTitle: true,
+        title: Image.asset(
+          'assets/logo3.png',
+          height: 40,
+        ),
+        backgroundColor: Colors.white,
+        elevation: 3, // 🔹 Adds a subtle shadow
+        shadowColor: Colors.black26, // 🔹 Soft shadow color
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -16,6 +24,12 @@ class PrivacyPolicyPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Text(
+                "Privacy & Policy",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+
               /// **Effective Date Section**
               _buildDateSection(),
               const SizedBox(height: 20),

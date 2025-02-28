@@ -206,8 +206,16 @@ class HelpSupportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Help & Support'),
+        centerTitle: true,
+        title: Image.asset(
+          'assets/logo3.png',
+          height: 40,
+        ),
+        backgroundColor: Colors.white,
+        elevation: 3, // 🔹 Adds a subtle shadow
+        shadowColor: Colors.black26, // 🔹 Soft shadow color
       ),
       body: SingleChildScrollView(
         child: Padding(
