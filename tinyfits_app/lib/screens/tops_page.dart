@@ -63,11 +63,11 @@ class TopsPage extends StatelessWidget {
             'Classic long-sleeve tee with a round neckline for a versatile look.',
         'material': 'Soft, stretchy fabric—easy care.',
         'images': [
-          'assets/tops/longsleeve_tround_neck_tee_pink.jpg',
           'assets/tops/longsleeve_tround_neck_tee_black.jpg',
+          'assets/tops/longsleeve_tround_neck_tee_pink.jpg',
           'assets/tops/longsleeve_tround_neck_tee_white.jpg'
         ],
-        'colors': ['White', 'Black', 'Pink'],
+        'colors': ['Black', 'Pink', 'White'],
         'sizes': ['S', 'M', 'L'],
       },
       {
@@ -99,7 +99,7 @@ class TopsPage extends StatelessWidget {
           'assets/tops/patch_striped_tee_red.jpg',
           'assets/tops/patch_striped_tee_blue.jpg'
         ],
-        'colors': ['Blue', 'Red'],
+        'colors': ['Red', 'Blue'],
         'sizes': ['S', 'M', 'L'],
       },
       {

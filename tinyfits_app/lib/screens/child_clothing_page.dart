@@ -45,7 +45,7 @@ class ChildClothingPage extends StatelessWidget {
           'assets/tops/patch_striped_tee_red.jpg',
           'assets/tops/patch_striped_tee_blue.jpg'
         ],
-        'colors': ['Blue', 'Red'],
+        'colors': ['Red', 'Blue'],
         'sizes': ['S', 'M', 'L'],
       },
       {
@@ -107,7 +107,7 @@ class ChildClothingPage extends StatelessWidget {
           'assets/tops/longsleeve_tround_neck_tee_black.jpg',
           'assets/tops/longsleeve_tround_neck_tee_white.jpg'
         ],
-        'colors': ['White', 'Black', 'Pink'],
+        'colors': ['Pink', 'Black', 'White'],
         'sizes': ['S', 'M', 'L'],
       },
     ];
@@ -204,12 +204,13 @@ class ChildClothingPage extends StatelessWidget {
 
                   return GestureDetector(
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => ClothingDetailsPage(item: item),
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChildClothingDetailsPage(
+                              child: child, item: item),
+                        ),
+                      );
                     },
                     child: Card(
                       elevation: 3,
