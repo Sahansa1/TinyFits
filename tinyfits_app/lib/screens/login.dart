@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:form_field_validator/form_field_validator.dart';
+//import 'package:form_field_validator/form_field_validator.dart';
 import 'package:tinyfits_app/screens/signup.dart';
 import 'package:tinyfits_app/screens/home_page.dart';
 import 'package:tinyfits_app/theme/colors.dart';
@@ -12,7 +12,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final _formKey = GlobalKey<FormState>();
+  // final _formKey = GlobalKey<FormState>();
   bool keepMeLoggedIn = false;
 
   void _handleLogin() {

@@ -1,91 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tinyfits_app/screens/child_tops.dart';
-import 'package:tinyfits_app/screens/child_pants.dart';
-//import 'package:tinyfits_app/screens/pants_page.dart';
+import 'clothing_details_page.dart'; // Import the details page
 import 'package:tinyfits_app/screens/custom_drawer.dart';
-import 'package:tinyfits_app/screens/profile_page.dart';
 import 'package:tinyfits_app/screens/clothing_page.dart';
+import 'package:tinyfits_app/screens/add_details_page.dart';
 import 'package:tinyfits_app/screens/home_page.dart';
-import 'package:tinyfits_app/screens/child_clothing_details_page.dart';
-
+import 'package:tinyfits_app/screens/profile_page.dart';
 import 'package:tinyfits_app/models/child_card.dart';
+import 'child_clothing_details_page.dart';
 
-class ChildClothingPage extends StatelessWidget {
+class ChildTopsPage extends StatelessWidget {
   final ChildCard child;
 
-  const ChildClothingPage({super.key, required this.child});
-
-  void _navigateToChildTops(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ChildTopsPage(child: child),
-      ),
-    );
-  }
-
-  void _navigateToChildPants(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ChildPantsPage(child: child),
-      ),
-    );
-  }
+  const ChildTopsPage({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> itemsList = [
-      {
-        'name': 'Patch Striped Tee',
-        'description':
-            'Striped T-shirt with a round neckline, short sleeves, and a front terry patch detail.',
-        'material': 'Soft cotton blend—easy care.',
-        'images': [
-          'assets/tops/patch_striped_tee_red.jpg',
-          'assets/tops/patch_striped_tee_blue.jpg'
-        ],
-        'colors': ['Red', 'Blue'],
-        'sizes': ['S', 'M', 'L'],
-      },
-      {
-        "name": "Ribbed Leggings",
-        "description":
-            "100% cashmere ribbed leggings with an elastic waistband.",
-        "material": "Luxuriously soft—dry clean only.",
-        "images": [
-          "assets/pants/ribbed_legging_pink.jpg",
-          "assets/pants/ribbed_legging_sand.jpg"
-        ],
-        "colors": ["Pink", "Brown"],
-        "sizes": ["S", "M", "L"]
-      },
-      {
-        "name": "Embroidered Shorts",
-        "description":
-            "Stylish shorts with delicate embroidery and an elastic waistband.",
-        "material": "Soft, durable fabric—machine washable.",
-        "images": [
-          "assets/pants/embroidered_shorts_yellow.jpg",
-          "assets/pants/embroidered_shorts_pink.jpg",
-          "assets/pants/embroidered_shorts_blue.jpg"
-        ],
-        "colors": ["Yellow", "Pink", "Blue"],
-        "sizes": ["S", "M", "L"]
-      },
-      {
-        'name': 'Thermal Shirt',
-        'description':
-            'Warm thermal shirt designed for insulation and comfort.',
-        'material': 'Heat-retaining fabric—machine washable.',
-        'images': [
-          'assets/tops/thermal_shirt_green.jpg',
-          'assets/tops/thermal_shirt_orange.jpg'
-        ],
-        'colors': ['Green', 'Orange'],
-        'sizes': ['S', 'M', 'L'],
-      },
+    final List<Map<String, dynamic>> childTopsList = [
       {
         'name': 'Sleeveless Tee',
         'description':
@@ -99,23 +29,109 @@ class ChildClothingPage extends StatelessWidget {
         'sizes': ['S', 'M', 'L'],
       },
       {
+        'name': 'Plain Tee',
+        'description':
+            'Simple short-sleeve tee with a round neckline for everyday wear.',
+        'material': 'Lightweight and breathable—machine washable.',
+        'images': [
+          'assets/tops/plain_tee_purple.jpg',
+          'assets/tops/plain_tee_pink.jpg',
+          'assets/tops/plain_tee_white.jpg'
+        ],
+        'colors': ['Purple', 'Pink', 'White'],
+        'sizes': ['S', 'M', 'L'],
+      },
+      {
+        'name': 'Printed Tee',
+        'description':
+            'Stylish printed tee with a comfortable fit and a round neckline.',
+        'material': 'Soft cotton fabric—easy care.',
+        'images': ['assets/tops/printed_tee.jpg'],
+        'colors': ['Various prints available'],
+        'sizes': ['S', 'M', 'L'],
+      },
+      {
+        'name': 'Striped Knit Sweatshirt',
+        'description':
+            'Knit sweater with a round neckline, long sleeves, and a tubular hem. Features a multicolor striped print.',
+        'material': 'Cozy knit—gentle wash recommended.',
+        'images': [
+          'assets/tops/striped_knit_sweatshirt_pink.jpg',
+          'assets/tops/striped_knit_sweatshirt_brown.jpg'
+        ],
+        'colors': ['Pink', 'Brown'],
+        'sizes': ['S', 'M', 'L'],
+      },
+      {
         'name': 'Long-Sleeve Round Neck Tee',
         'description':
             'Classic long-sleeve tee with a round neckline for a versatile look.',
         'material': 'Soft, stretchy fabric—easy care.',
         'images': [
-          'assets/tops/longsleeve_tround_neck_tee_pink.jpg',
           'assets/tops/longsleeve_tround_neck_tee_black.jpg',
+          'assets/tops/longsleeve_tround_neck_tee_pink.jpg',
           'assets/tops/longsleeve_tround_neck_tee_white.jpg'
         ],
-        'colors': ['Pink', 'Black', 'White'],
+        'colors': ['Black', 'Pink', 'White'],
+        'sizes': ['S', 'M', 'L'],
+      },
+      {
+        'name': 'Long-Sleeve Striped Tee',
+        'description': 'Timeless striped long-sleeve tee with a relaxed fit.',
+        'material': 'Lightweight and breathable—machine washable.',
+        'images': [
+          'assets/tops/lsleeve_striped_blue.jpg',
+          'assets/tops/lsleeve_striped_brown.jpg'
+        ],
+        'colors': ['Blue', 'Brown'],
+        'sizes': ['S', 'M', 'L'],
+      },
+      {
+        'name': 'Openwork Knit Top',
+        'description':
+            'Sleeveless open-knit top with a round neckline and scalloped trim.',
+        'material': 'Delicate knit—hand wash recommended.',
+        'images': ['assets/tops/openwork_knit_top.jpg'],
+        'colors': ['Blue'],
+        'sizes': ['S', 'M', 'L'],
+      },
+      {
+        'name': 'Patch Striped Tee',
+        'description':
+            'Striped T-shirt with a round neckline, short sleeves, and a front terry patch detail.',
+        'material': 'Soft cotton blend—easy care.',
+        'images': [
+          'assets/tops/patch_striped_tee_red.jpg',
+          'assets/tops/patch_striped_tee_blue.jpg'
+        ],
+        'colors': ['Red', 'Blue'],
+        'sizes': ['S', 'M', 'L'],
+      },
+      {
+        'name': 'Knit Cardigan',
+        'description':
+            'Cozy knit cardigan with a soft texture and a relaxed fit.',
+        'material': 'Warm and breathable—machine washable.',
+        'images': ['assets/tops/knitcardigan.jpg'],
+        'colors': ['Pink'],
+        'sizes': ['S', 'M', 'L'],
+      },
+      {
+        'name': 'Thermal Shirt',
+        'description':
+            'Warm thermal shirt designed for insulation and comfort.',
+        'material': 'Heat-retaining fabric—machine washable.',
+        'images': [
+          'assets/tops/thermal_shirt_green.jpg',
+          'assets/tops/thermal_shirt_orange.jpg'
+        ],
+        'colors': ['Green', 'Orange'],
         'sizes': ['S', 'M', 'L'],
       },
     ];
+
     return Scaffold(
       backgroundColor: Colors.white,
-
-      /// **App Bar**
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(
@@ -134,63 +150,47 @@ class ChildClothingPage extends StatelessWidget {
           ),
         ],
       ),
-
-      /// **Side Drawer**
+      //**************************************************************************************** */
       endDrawer: CustomDrawer(
-        userName: child.name,
-        userEmail: "User Email Here",
+        userName: "John Doe", //HARDCORDED
+        userEmail: "johndoe@email.com", // HARDCORDED
       ),
 
-      /// **Body Content**
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// **Categories Section**
-            const Text(
-              'Categories',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+            /// **Header Section with "Tops" Title**
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.1),
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () => _navigateToChildTops(context),
-                  child: const Column(
-                    children: [
-                      FaIcon(FontAwesomeIcons.shirt, size: 40),
-                      Text('Tops'),
-                    ],
+              child: const Center(
+                child: Text(
+                  'Tops',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(width: 32),
-                GestureDetector(
-                  onTap: () => _navigateToChildPants(context),
-                  child: const Column(
-                    children: [
-                      Icon(Icons.straight, size: 40),
-                      Text('Pants'),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 32),
-
-            /// **Items Section**
-            const Text(
-              'Items',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 16),
 
+            /// **Spacing Before Grid**
+            const SizedBox(height: 12),
+
+            /// **Expanded GridView**
             Expanded(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -199,9 +199,9 @@ class ChildClothingPage extends StatelessWidget {
                   mainAxisSpacing: 12,
                   childAspectRatio: 0.85, // Adjusted for better proportions
                 ),
-                itemCount: itemsList.length,
+                itemCount: childTopsList.length,
                 itemBuilder: (context, index) {
-                  final item = itemsList[index];
+                  final item = childTopsList[index];
 
                   return GestureDetector(
                     onTap: () {
@@ -349,47 +349,6 @@ class ChildClothingPage extends StatelessWidget {
             );
           }
         },
-      ),
-    );
-  }
-
-  /// **Builds a Clothing Item Card**
-  Widget _buildItemCard(BuildContext context, String title) {
-    return GestureDetector(
-      onTap: () {
-        // // Navigate to child-specific clothing details page
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => ChildClothingDetailsPage(
-
-        //       child: child,
-        //     ),
-        //   ),
-        // );
-      },
-      child: Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(height: 8),
-            IconButton(
-              icon: const Icon(Icons.favorite_border),
-              onPressed: () {},
-            ),
-          ],
-        ),
       ),
     );
   }

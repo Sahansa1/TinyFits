@@ -200,8 +200,6 @@ import 'package:tinyfits_app/theme/colors.dart';
 //   ),
 // ];
 
-import 'package:flutter/material.dart';
-
 class HelpSupportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

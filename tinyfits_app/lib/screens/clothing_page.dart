@@ -6,7 +6,6 @@ import 'package:tinyfits_app/screens/pants_page.dart';
 import 'package:tinyfits_app/screens/custom_drawer.dart';
 import 'package:tinyfits_app/screens/clothing_details_page.dart';
 import 'package:tinyfits_app/screens/home_page.dart';
-import 'package:tinyfits_app/theme/colors.dart';
 
 class ClothingPage extends StatelessWidget {
   const ClothingPage({super.key});

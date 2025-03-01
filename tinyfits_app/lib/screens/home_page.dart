@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tinyfits_app/models/child_card.dart';
 import 'package:tinyfits_app/screens/add_details_page.dart';
-import 'package:tinyfits_app/screens/growth_chart_page.dart';
+
 import 'package:tinyfits_app/screens/profile_page.dart';
 import 'package:tinyfits_app/screens/clothing_page.dart';
-import 'package:tinyfits_app/screens/help_support_page.dart';
-import 'package:tinyfits_app/screens/privacy_policy_page.dart';
-import 'package:tinyfits_app/screens/about_page.dart';
+
 import 'package:tinyfits_app/screens/edit_details_page.dart';
 import 'package:tinyfits_app/screens/child_clothing_page.dart';
 import 'package:tinyfits_app/theme/colors.dart';
-import 'package:tinyfits_app/screens/login.dart';
+
 import 'package:tinyfits_app/screens/custom_drawer.dart';
 import 'package:intl/intl.dart';
 
@@ -415,7 +413,7 @@ class _HomePageState extends State<HomePage> {
         months--;
       }
 
-      return "$years years, $months months, $days days";
+      return "$years yrs, $months mo, $days days";
     } catch (e) {
       return "Invalid date"; // Handle errors gracefully
     }
