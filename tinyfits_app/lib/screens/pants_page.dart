@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'clothing_details_page.dart'; // Import the details page
 import 'package:tinyfits_app/screens/custom_drawer.dart';
+import 'profile_Page.dart';
+import 'home_Page.dart';
+import 'add_details_page.dart';
+
+import 'clothing_page.dart';
 
 class PantsPage extends StatelessWidget {
   const PantsPage({super.key});
@@ -337,6 +342,49 @@ class PantsPage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+
+      /// **Bottom Navigation Bar**
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0, // This should dynamically change if needed
+        selectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const ClothingPage()),
+              );
+              break;
+            case 1:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const AddDetailsPage()),
+              );
+              break;
+            case 2:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+              );
+              break;
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.checkroom),
+            label: 'Clothing',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: 'Add',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }
