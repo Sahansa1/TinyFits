@@ -932,6 +932,17 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
                             labelText: "Height (cm) - Optional",
                           ),
                           keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value!.isNotEmpty) {
+                              final height = double.tryParse(value);
+                              if (height == null ||
+                                  height < 40 ||
+                                  height > 150) {
+                                return "Height must be between 40 cm and 150 cm";
+                              }
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 8),
                         TextFormField(
@@ -940,6 +951,15 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
                             labelText: "Weight (kg) - Optional",
                           ),
                           keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value!.isNotEmpty) {
+                              final weight = double.tryParse(value);
+                              if (weight == null || weight < 3 || weight > 35) {
+                                return "Weight must be between 3 kg and 35 kg";
+                              }
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 16),
                         ElevatedButton(
@@ -1084,14 +1104,19 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
       print("Error parsing birth date: $e");
       return; // Exit function if parsing fails
     }
-
+// Calculate one year after birth date
+    DateTime oneYearAfterBirth = DateTime(
+      birthDate.year + 1, // Add one year
+      birthDate.month,
+      birthDate.day,
+    );
     // Get the current date to restrict future selection
     DateTime currentDate = DateTime.now();
 
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: currentDate, // Default selected date
-      firstDate: birthDate, // Restrict selection to birth date or later
+      firstDate: oneYearAfterBirth, // Restrict selection to birth date or later
       lastDate: currentDate, // User cannot pick a future date
       builder: (context, child) {
         return Theme(
