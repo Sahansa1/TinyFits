@@ -126,6 +126,7 @@ import 'package:tinyfits_app/theme/colors.dart';
 import 'package:tinyfits_app/screens/custom_drawer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tinyfits_app/screens/child_clothing_page.dart';
+import 'growth_chart_page.dart';
 
 class ProfilePage extends StatelessWidget {
   final ChildCard card;
@@ -134,6 +135,18 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void _navigateToGrowthChart() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => GrowthChartPage(
+            pastMeasurements: card.pastMeasurements,
+            dateOfBirth: card.dateOfBirth, // Pass the child's birth date
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -314,9 +327,8 @@ class ProfilePage extends StatelessWidget {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.themeGreen,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 14, horizontal: 15),
+                        backgroundColor: AppColors.themePeach,
+                        minimumSize: const Size(200, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -326,10 +338,26 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(color: Colors.white)),
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  // const SizedBox(height: 20),
+                  ElevatedButton.icon(
+                    onPressed: _navigateToGrowthChart,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.themeGreen,
+                      minimumSize: const Size(200, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    icon: const Icon(Icons.bar_chart, color: Colors.white),
+                    label: const Text(
+                      "View Growth Chart",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  ),
                 ],
               ),
             ),
-
             const SizedBox(height: 20),
 
             /// **Action Buttons**
