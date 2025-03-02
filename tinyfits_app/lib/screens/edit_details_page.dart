@@ -247,23 +247,26 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
   //   }
   //}
 
+  //FUnction to select a date
   Future<void> _selectDate(BuildContext context) async {
+    final DateTime currentDate = DateTime.now(); // Get the current date
+    final DateTime fiveYearsAgo = DateTime(currentDate.year - 5,
+        currentDate.month, currentDate.day); // Calculate the date 5 years ago
+
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime.now(),
+      initialDate: fiveYearsAgo, // Default selected date: 5 years ago
+      firstDate: fiveYearsAgo, // User cannot pick a date older than 5 years
+      lastDate: currentDate, // User cannot pick a future date
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: AppColors.themePurple, // Header color
-            colorScheme: ColorScheme.light(
-              primary: AppColors.themePurple, // Selected date color
-              onPrimary: Colors.white, // Text color on selected date
-              onSurface: Colors.black, // Default text color
+            primaryColor: AppColors.themePurple,
+            colorScheme: const ColorScheme.light(
+              primary: AppColors.themePurple, // Selected date highlight
+              onPrimary: Colors.white, //text color on selected date
+              onSurface: Colors.black, // default text color
             ),
-            dialogBackgroundColor:
-                Colors.white, // Background color of the dialog
           ),
           child: child!,
         );
@@ -379,6 +382,7 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
               MaterialPageRoute(
                 builder: (context) => PastMeasurementsPage(
                   pastMeasurements: pastRecords, // Pass stored data
+                  dateOfBirth: widget.card.dateOfBirth,
                 ),
               ),
             );

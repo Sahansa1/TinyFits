@@ -389,7 +389,9 @@ class ProfilePage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => PastMeasurementsPage(
-                          pastMeasurements: card.pastMeasurements),
+                        pastMeasurements: card.pastMeasurements,
+                        dateOfBirth: card.dateOfBirth,
+                      ),
                     ),
                   );
                 },

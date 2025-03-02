@@ -909,23 +909,58 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
     );
   }
 
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(2000),
+  //     lastDate: DateTime.now(),
+  //     builder: (context, child) {
+  //       return Theme(
+  //         data: ThemeData.light().copyWith(
+  //           primaryColor: AppColors.themePurple, // Header color
+  //           colorScheme: ColorScheme.light(
+  //             primary: AppColors.themePurple, // Selected date color
+  //             onPrimary: Colors.white, // Text color on selected date
+  //             onSurface: Colors.black, // Default text color
+  //           ),
+  //           dialogBackgroundColor:
+  //               Colors.white, // Background color of the dialog
+  //         ),
+  //         child: child!,
+  //       );
+  //     },
+  //   );
+
+  //   if (picked != null) {
+  //     setState(() {
+  //       _dobController.text = "${picked.day}/${picked.month}/${picked.year}";
+  //     });
+  //   }
+  // }
+
   Future<void> _selectDate(BuildContext context) async {
+    final DateTime currentDate = DateTime.now();
+    final DateTime fiveYearsAgo =
+        DateTime(currentDate.year - 5, currentDate.month, currentDate.day);
+
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime.now(),
+      initialDate: fiveYearsAgo, // Default to 5 years ago
+      firstDate:
+          fiveYearsAgo, // Restrict minimum selectable date to 5 years ago
+      lastDate: currentDate, // Restrict maximum selectable date to today
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(
             primaryColor: AppColors.themePurple, // Header color
-            colorScheme: ColorScheme.light(
+            colorScheme: const ColorScheme.light(
               primary: AppColors.themePurple, // Selected date color
               onPrimary: Colors.white, // Text color on selected date
               onSurface: Colors.black, // Default text color
             ),
-            dialogBackgroundColor:
-                Colors.white, // Background color of the dialog
+            // dialogBackgroundColor:
+            //  Colors.white, // Background color of the dialog
           ),
           child: child!,
         );
@@ -1023,6 +1058,7 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
               context,
               MaterialPageRoute(
                 builder: (context) => PastMeasurementsPage(
+                  dateOfBirth: _dobController.text,
                   pastMeasurements: pastRecords, // Pass stored data
                 ),
               ),

@@ -4,8 +4,13 @@ import 'package:tinyfits_app/screens/growth_chart_page.dart';
 
 class PastMeasurementsPage extends StatefulWidget {
   final List<Map<String, dynamic>> pastMeasurements;
+  final String dateOfBirth;
 
-  const PastMeasurementsPage({super.key, required this.pastMeasurements});
+  const PastMeasurementsPage({
+    super.key,
+    required this.pastMeasurements,
+    required this.dateOfBirth, // Initialize it
+  });
 
   @override
   _PastMeasurementsPageState createState() => _PastMeasurementsPageState();
@@ -328,7 +333,8 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => GrowthChartPage(pastMeasurements: pastRecords),
+        builder: (context) => GrowthChartPage(
+            dateOfBirth: widget.dateOfBirth, pastMeasurements: pastRecords),
       ),
     );
   }
