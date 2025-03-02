@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'clothing_details_page.dart'; // Import the details page
+
 import 'package:tinyfits_app/screens/custom_drawer.dart';
 import 'package:tinyfits_app/screens/clothing_page.dart';
-import 'package:tinyfits_app/screens/add_details_page.dart';
 import 'package:tinyfits_app/screens/home_page.dart';
 import 'package:tinyfits_app/screens/profile_page.dart';
 import 'package:tinyfits_app/models/child_card.dart';
