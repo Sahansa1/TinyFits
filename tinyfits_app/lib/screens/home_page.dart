@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tinyfits_app/models/child_card.dart';
 import 'package:tinyfits_app/screens/add_details_page.dart';
+import 'growth_chart_page.dart';
+import 'past_measurements_page.dart';
 
 import 'package:tinyfits_app/screens/profile_page.dart';
 import 'package:tinyfits_app/screens/clothing_page.dart';
@@ -144,24 +146,6 @@ class _HomePageState extends State<HomePage> {
                           // **Icons**
                           Row(
                             children: [
-                              IconButton(
-                                  icon: CircleAvatar(
-                                    radius: 15,
-                                    backgroundColor: AppColors.themeGreen,
-                                    child: const Icon(Icons.bar_chart,
-                                        color: Colors.white, size: 18),
-                                  ),
-                                  onPressed: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) => GrowthChartPage(
-                                    //       pastMeasurements:ChildCard.pastMeasurements[],
-                                    //      // child: card, // pass child data
-                                    //     ),
-                                    //   ),
-                                    // );
-                                  }),
                               // **Clothing Icon**
                               IconButton(
                                   icon: CircleAvatar(
@@ -180,6 +164,50 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     );
                                   }),
+
+                              IconButton(
+                                icon: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: AppColors.themeGreen,
+                                  child: const Icon(Icons.bar_chart,
+                                      color: Colors.white, size: 18),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => GrowthChartPage(
+                                        pastMeasurements: card
+                                            .pastMeasurements, // Pass the child's measurements
+                                        dateOfBirth: card
+                                            .dateOfBirth, // Pass the child's date of birth
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              IconButton(
+                                icon: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: AppColors.themePeach,
+                                  child: const Icon(Icons.history,
+                                      color: Colors.white, size: 18),
+                                ),
+                                onPressed: () async {
+                                  final result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          PastMeasurementsPage(
+                                        pastMeasurements: card
+                                            .pastMeasurements, // Pass current records
+                                        dateOfBirth: card
+                                            .dateOfBirth, // Pass child's birth date
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
 
                               // **Delete Icon**
                               IconButton(
