@@ -232,21 +232,6 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
     );
   }
 
-  /// 📌 **Date Picker**
-  // Future<void> _selectDate(BuildContext context) async {
-  //   final DateTime? picked = await showDatePicker(
-  //     context: context,
-  //     initialDate: DateTime.now(),
-  //     firstDate: DateTime(2000),
-  //     lastDate: DateTime.now(),
-  //   );
-  //   if (picked != null) {
-  //     setState(() {
-  //       dobController.text = "${picked.day}/${picked.month}/${picked.year}";
-  //     });
-  //   }
-  //}
-
   //FUnction to select a date
   Future<void> _selectDate(BuildContext context) async {
     final DateTime currentDate = DateTime.now(); // Get the current date

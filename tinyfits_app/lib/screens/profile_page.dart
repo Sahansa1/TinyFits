@@ -299,6 +299,33 @@ class ProfilePage extends StatelessWidget {
                   // _buildInfoRow("Weight", "${card.weight} kg"),
                   if (card.note != null && card.note!.isNotEmpty)
                     _buildInfoRow("Note", card.note!),
+                  Center(
+                    /// **View Past Measurements Button**
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PastMeasurementsPage(
+                              pastMeasurements: card.pastMeasurements,
+                              dateOfBirth: card.dateOfBirth,
+                            ),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.themeGreen,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 14, horizontal: 15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      icon: const Icon(Icons.history, color: Colors.white),
+                      label: const Text(" View Past Measurements ",
+                          style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -381,33 +408,6 @@ class ProfilePage extends StatelessWidget {
             ),
 
             const SizedBox(height: 16),
-            Center(
-              /// **View Past Measurements Button**
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PastMeasurementsPage(
-                        pastMeasurements: card.pastMeasurements,
-                        dateOfBirth: card.dateOfBirth,
-                      ),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.themeGreen,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 14, horizontal: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                icon: const Icon(Icons.history, color: Colors.white),
-                label: const Text(" View Past Measurements ",
-                    style: TextStyle(color: Colors.white)),
-              ),
-            ),
           ],
         ),
       ),
