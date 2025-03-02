@@ -295,8 +295,8 @@ class ProfilePage extends StatelessWidget {
                   /// **User Info Fields**
                   _buildInfoRow("Date of Birth", card.dateOfBirth),
                   _buildInfoRow("Gender", card.gender),
-                  _buildInfoRow("Height", "${card.height} cm"),
-                  _buildInfoRow("Weight", "${card.weight} kg"),
+                  // _buildInfoRow("Height", "${card.height} cm"),
+                  // _buildInfoRow("Weight", "${card.weight} kg"),
                   if (card.note != null && card.note!.isNotEmpty)
                     _buildInfoRow("Note", card.note!),
                 ],

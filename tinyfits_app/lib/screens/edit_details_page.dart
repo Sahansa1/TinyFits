@@ -33,8 +33,8 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
     super.initState();
     nameController = TextEditingController(text: widget.card.name);
     dobController = TextEditingController(text: widget.card.dateOfBirth);
-    heightController = TextEditingController(text: widget.card.height);
-    weightController = TextEditingController(text: widget.card.weight);
+    // heightController = TextEditingController(text: widget.card.height);
+    // weightController = TextEditingController(text: widget.card.weight);
     noteController = TextEditingController(text: widget.card.note);
     selectedGender = widget.card.gender;
     if (!genderOptions.contains(selectedGender)) {
@@ -331,8 +331,8 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
         name: nameController.text,
         dateOfBirth: dobController.text,
         gender: selectedGender,
-        height: heightController.text,
-        weight: weightController.text,
+        // height: heightController.text,
+        // weight: weightController.text,
         note: noteController.text,
         imageUrl: widget.card.imageUrl,
         pastMeasurements: [],
