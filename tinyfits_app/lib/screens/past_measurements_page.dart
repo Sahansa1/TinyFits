@@ -540,18 +540,7 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
                             labelText: "Date (YYYY-MM-DD)",
                             suffixIcon: IconButton(
                               icon: const Icon(Icons.calendar_today),
-                              onPressed: () async {
-                                DateTime? pickedDate = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(2000),
-                                  lastDate: DateTime.now(),
-                                );
-                                if (pickedDate != null) {
-                                  _dateController.text =
-                                      "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
-                                }
-                              },
+                              onPressed: () => _selectDate(context),
                             ),
                           ),
                         ),
@@ -681,5 +670,51 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    // Parse the child's birth date from the provided "DD/MM/YYYY" format
+    DateTime? birthDate;
+    try {
+      List<String> dateParts = widget.dateOfBirth.split("/");
+      birthDate = DateTime(
+        int.parse(dateParts[2]), // Year
+        int.parse(dateParts[1]), // Month
+        int.parse(dateParts[0]), // Day
+      );
+    } catch (e) {
+      print("Error parsing birth date: $e");
+      return; // Exit function if parsing fails
+    }
+
+    // Get the current date to restrict future selection
+    DateTime currentDate = DateTime.now();
+
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: currentDate, // Default selected date
+      firstDate: birthDate, // Restrict selection to birth date or later
+      lastDate: currentDate, // User cannot pick a future date
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: AppColors.themePurple,
+            colorScheme: const ColorScheme.light(
+              primary: AppColors.themePurple, // Highlighted date color
+              onPrimary: Colors.white, // Text color for selected date
+              onSurface: Colors.black, // Default text color
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (pickedDate != null) {
+      setState(() {
+        _dateController.text =
+            "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+      });
+    }
   }
 }

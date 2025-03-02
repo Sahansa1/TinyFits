@@ -24,10 +24,10 @@ class _HomePageState extends State<HomePage> {
   final List<Color> cardColors = [
     AppColors.themeOrange,
     AppColors.themePurple,
-    AppColors.themeGreen,
-    AppColors.themeBlue,
     AppColors.themePink,
     AppColors.themePeach,
+    AppColors.themeGreen,
+    AppColors.themeBlue,
   ];
 
   Color getCardColor(int index) {
@@ -419,7 +419,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 }
-
 
 // import 'package:flutter/material.dart';
 // import 'package:tinyfits_app/models/child_card.dart';
