@@ -3,7 +3,7 @@ import 'package:tinyfits_app/theme/colors.dart';
 import 'package:tinyfits_app/screens/custom_drawer.dart';
 import 'package:tinyfits_app/screens/clothing_page.dart';
 import 'package:tinyfits_app/screens/add_details_page.dart';
-import 'package:tinyfits_app/screens/profile_page.dart';
+
 import 'package:tinyfits_app/screens/home_page.dart';
 
 class ClothingDetailsPage extends StatefulWidget {

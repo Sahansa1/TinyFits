@@ -333,9 +333,8 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
                   color: isSelected ? AppColors.themeBlue : Colors.white,
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                      color: isSelected
-                          ? AppColors.themeBlue!
-                          : Colors.grey[300]!),
+                      color:
+                          isSelected ? AppColors.themeBlue : Colors.grey[300]!),
                 ),
                 child: Center(
                   child: Text(
