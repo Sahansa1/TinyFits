@@ -51,6 +51,37 @@ class _PastMeasurementsPageState extends State<PastMeasurementsPage> {
       return;
     }
 
+    double? height;
+    double? weight;
+
+    // Validate height input
+    if (_heightController.text.isNotEmpty) {
+      height = double.tryParse(_heightController.text);
+      if (height == null || height < 40 || height > 150) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Height must be between 40 cm and 150 cm"),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+        return;
+      }
+    }
+
+    // Validate weight input
+    if (_weightController.text.isNotEmpty) {
+      weight = double.tryParse(_weightController.text);
+      if (weight == null || weight < 3 || weight > 35) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Weight must be between 3 kg and 35 kg"),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+        return;
+      }
+    }
+
     setState(() {
       pastRecords.add({
         'date': _dateController.text,
