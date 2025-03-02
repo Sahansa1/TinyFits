@@ -193,8 +193,8 @@ class _HomePageState extends State<HomePage> {
                                   child: const Icon(Icons.history,
                                       color: Colors.white, size: 18),
                                 ),
-                                onPressed: () async {
-                                  final result = await Navigator.push(
+                                onPressed: () {
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
