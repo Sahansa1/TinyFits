@@ -277,7 +277,6 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
   }
 
-  // Function to call the Flask API for sign-up
   Future<void> _signupUser() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -285,12 +284,10 @@ class _SignUpState extends State<SignUp> {
       _isLoading = true;
     });
 
-    final url = Uri.parse("http://192.168.8.155:5000/signup"); // API endpoint
+    final url = Uri.parse("http://192.168.8.155:5000/signup"); // Flask API URL
     final response = await http.post(
       url,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: {"Content-Type": "application/json"},
       body: jsonEncode({
         "email": _emailController.text.trim(),
         "password": _passwordController.text.trim(),
@@ -302,21 +299,37 @@ class _SignUpState extends State<SignUp> {
       _isLoading = false;
     });
 
-    final responseData = jsonDecode(response.body);
+    print("Raw API Response: ${response.body}");
+    print("Response Status Code: ${response.statusCode}");
 
-    if (response.statusCode == 201) {
-      // Success: Show success message & navigate to login
+    try {
+      final responseData = jsonDecode(response.body);
+      print("Decoded API Response: $responseData");
+
+      // ✅ Accept 200 and 201 as success
+      if ((response.statusCode == 201 || response.statusCode == 200) &&
+          responseData.containsKey("message")) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("✅ ${responseData['message']}")),
+        );
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const Login()),
+        );
+      } else {
+        String errorMessage = responseData.containsKey("error")
+            ? responseData["error"]
+            : "Unexpected API response";
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("❌ $errorMessage")),
+        );
+      }
+    } catch (e) {
+      print("Error decoding response: $e");
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("✅ User Created Successfully!")),
-      );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const Login()),
-      );
-    } else {
-      // Error: Show API error message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("❌ ${responseData['error']}")),
+        const SnackBar(content: Text("❌ Failed to process API response")),
       );
     }
   }
