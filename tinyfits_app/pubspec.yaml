@@ -96,6 +96,24 @@ flutter:
     - assets/splashscreen.mp4
     - assets/logo.png
     - assets/logo3.png
-    - assets/tops/
+    - assets/tops/sleeveless_tee_yellow.jpg
+    - assets/tops/sleeveless_tee_blue.jpg
+    - assets/tops/plain_tee_purple.jpg
+    - assets/tops/plain_tee_pink.jpg
+    - assets/tops/plain_tee_white.jpg
+    - assets/tops/printed_tee.jpg
+    - assets/tops/striped_knit_sweatshirt_pink.jpg
+    - assets/tops/striped_knit_sweatshirt_brown.jpg
+    - assets/tops/longsleeve_tround_neck_tee_black.jpg
+    - assets/tops/longsleeve_tround_neck_tee_pink.jpg
+    - assets/tops/longsleeve_tround_neck_tee_white.jpg
+    - assets/tops/lsleeve_striped_blue.jpg
+    - assets/tops/lsleeve_striped_brown.jpg
+    - assets/tops/openwork_knit_top.jpg
+    - assets/tops/patch_striped_tee_red.jpg
+    - assets/tops/patch_striped_tee_blue.jpg
+    - assets/tops/knitcardigan.jpg
+    - assets/tops/thermal_shirt_green.jpg
+    - assets/tops/thermal_shirt_orange.jpg
     - assets/pants/
     - assets/other/

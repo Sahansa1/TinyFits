@@ -1,0 +1,2 @@
+C:/Users/DELL/TinyFits/TinyFits/tinyfits_app/android/app/.cxx/RelWithDebInfo/414d5l5j/x86/CMakeFiles/edit_cache.dir
+C:/Users/DELL/TinyFits/TinyFits/tinyfits_app/android/app/.cxx/RelWithDebInfo/414d5l5j/x86/CMakeFiles/rebuild_cache.dir
